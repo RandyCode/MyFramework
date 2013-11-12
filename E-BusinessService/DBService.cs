@@ -14,8 +14,7 @@ namespace E_BusinessService
 
         public void DoWork()
         {
-            var d = DbOperater.DbObjectContext;
-        
+            //var d = db        
         }
     }
 }

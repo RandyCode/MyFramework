@@ -15,7 +15,7 @@ namespace ORM
 
 
         /// <summary>
-        /// 
+        /// modle特性映射數據表
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
