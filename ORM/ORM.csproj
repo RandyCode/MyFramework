@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Attributes\DataFieldAttribute.cs" />
     <Compile Include="Attributes\DataTableAttribute.cs" />
+    <Compile Include="DbContext.cs" />
     <Compile Include="DbOperater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

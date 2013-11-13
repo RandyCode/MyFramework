@@ -3,6 +3,7 @@ using ORM.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,20 +16,21 @@ namespace ORM
 
 
         /// <summary>
-        /// modle特性映射數據表
+        ///  mapping the datatable to dictionary
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        public Dictionary<string,string> MappingAttributte<T>(T t)
+        public IDictionary<string, string> MappingAttributte<T>(T t)
+            where T : DBObject, new()
         {
             if (t == null)
-               throw new Exception("client post a null entity,plz check it again.");
-            Dictionary<string, string> dic = new Dictionary<string, string>();
+                throw new Exception("client post a null entity,plz check it again.");
+            IDictionary<string, string> dic = new Dictionary<string, string>();
             Type type = typeof(T);
             string tableName = type.GetCustomAttribute<DataTableAttribute>().TableName;
             dic.Add("tablename", tableName);
-            string fieldName,value;
+            string fieldName, value;
             foreach (PropertyInfo pro in type.GetProperties())
             {
                 fieldName = pro.GetCustomAttribute<DataFieldAttribute>().DataFieldName;
@@ -36,6 +38,38 @@ namespace ORM
                 dic.Add(fieldName, value);
             }
             return dic;
+        }
+
+        //public string GetSelectSQL(IDictionary<string, string> dic)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    sb.Append("select ");
+        //    foreach (var item in dic)
+        //    {
+        //        if (!string.IsNullOrEmpty(item.Value))
+        //        {
+
+        //        }
+        //    }
+        //}
+
+        //public string GetUpdateSQL()
+        //{
+
+        //}
+        //public string GetCreateSQL()
+        //{
+
+        //}
+        //public string GetDeleteSQL()
+        //{
+
+        //}
+
+        public string LambdaToSql(Expression exp)
+        {
+            
+            return null;
         }
 
 
