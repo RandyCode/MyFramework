@@ -43,9 +43,16 @@
     <Compile Include="Attributes\DataFieldAttribute.cs" />
     <Compile Include="Attributes\DataTableAttribute.cs" />
     <Compile Include="DbContext.cs" />
+    <Compile Include="DBObject.cs" />
     <Compile Include="DbOperater.cs" />
+    <Compile Include="enum\CURDActionEnum.cs" />
+    <Compile Include="interface\IDbContext.cs" />
+    <Compile Include="lambdaToSql\ConditionBuilder.cs" />
+    <Compile Include="lambdaToSql\ExpressionVisitor.cs" />
+    <Compile Include="lambdaToSql\PartialEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

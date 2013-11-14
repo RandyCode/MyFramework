@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace ORM
 {
-   public class DbContext:IDbContext
+    public class DbContext : IDbContext
     {
-       private DbOperater _operater=null;
+        private DbOperater _operater = null;
 
-       public DbContext()
-       {
-           _operater = new DbOperater();
-         
-       }
+        public DbContext()
+        {
+            _operater = new DbOperater();
+
+        }
 
         /// <summary>
         /// 排序查找list
         /// </summary>
         public List<T> GetList<T>(System.Linq.Expressions.Expression<Func<T, bool>> where = null, System.Linq.Expressions.Expression<Func<T, object>> sortField = null, bool desc = true) where T : DBObject, new()
         {
-         
+
             throw new NotImplementedException();
         }
 
@@ -65,12 +65,12 @@ namespace ORM
 
         public int ExecuteNonQuery(string sql)
         {
-            throw new NotImplementedException();
+            return _operater.ExecuteNonQuery(sql);
         }
 
         public object ExecuteScalar(string sql)
         {
-            throw new NotImplementedException();
+            return _operater.ExecuteScalar(sql);
         }
     }
 }
