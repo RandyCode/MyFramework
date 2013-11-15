@@ -30,9 +30,6 @@ namespace ORM
         void Remove<T>(Expression<Func<T, bool>> where = null)
           where T : DBObject, new();
 
-        int GetCount<T>(Expression<Func<T, bool>> where = null)
-             where T : DBObject, new();
-
         int ExecuteNonQuery(string sql);
 
         object ExecuteScalar(string sql);

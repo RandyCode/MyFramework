@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace ORM
 {
     /// <summary>
-    /// all the model must inherit this class
+    /// A1:all the model must inherit this class
+    /// A2:create data must use guid
     /// </summary>
    public class DBObject
     {
