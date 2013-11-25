@@ -44,14 +44,24 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBService.cs" />
-    <Compile Include="interface\IDBService.cs" />
+    <Compile Include="CargoService.cs" />
+    <Compile Include="interface\ICargoService.cs" />
+    <Compile Include="UserService.cs" />
+    <Compile Include="interface\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\E-BusinessCommon\E-BusinessCommon.csproj">
+      <Project>{5935489d-c648-4520-bc27-143b266a9b9e}</Project>
+      <Name>E-BusinessCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E-BusinessModel\E-BusinessModel.csproj">
+      <Project>{2fe16c41-08d7-4f8d-b4c9-be8181a776ba}</Project>
+      <Name>E-BusinessModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ORM\ORM.csproj">
       <Project>{d620a256-9454-49ab-8fa9-8764474687dd}</Project>
       <Name>ORM</Name>

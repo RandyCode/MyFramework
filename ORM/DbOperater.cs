@@ -15,33 +15,39 @@ namespace ORM
 {
     public class DbOperater
     {
-        private string _connStr = System.Configuration.ConfigurationManager.ConnectionStrings["connStr"].ConnectionString;
+        private string _connStr = null;
         private SqlConnection _conn;
         private SqlCommand _cmd;
 
+        public DbOperater()
+        {
+            //_connStr = System.Configuration.ConfigurationManager.ConnectionStrings["connStr"].ConnectionString;
+            _connStr = "server=.;database=ebusiness;uid=sa;pwd=12345678;";
+        }
+
         private void OpenConnection(Action action)
         {
-            //using (_conn = new SqlConnection(_connStr))
-            //{
-            //把鏈接放進當前線程中，一次請求只建立一次鏈接。 
-            _conn.Open();
-            using (_cmd = new SqlCommand())
+            using (_conn = new SqlConnection(_connStr))
             {
-                _cmd.Connection = _conn;
-                _cmd.CommandType = CommandType.Text;
-                try
+                //把鏈接放進當前線程中，一次請求只建立一次鏈接。 
+                _conn.Open();
+                using (_cmd = new SqlCommand())
                 {
-                    action();
-                }
-                catch (SqlException ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+                    _cmd.Connection = _conn;
+                    _cmd.CommandType = CommandType.Text;
+                    try
+                    {
+                        action();
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
 
+                }
+                //當前線程結束前才close鏈接
+                _conn.Close();
             }
-            //當前線程結束前才close鏈接
-            _conn.Close();
-            //}
         }
 
 
@@ -108,10 +114,16 @@ namespace ORM
             {
                 if (pro.GetValue(t) != null)
                 {
-                    fieldName = pro.GetCustomAttribute<DataFieldAttribute>().DataFieldName;
                     value = pro.GetValue(t).ToString();
                     valuetype = pro.GetValue(t).GetType().ToString();
-                    dic.Add(fieldName, new SqlTypeValue() { Value = value, Type = valuetype });
+                    //排除DbTypeAction
+                    if (valuetype == "ORM.CURDActionEnum")
+                        break;
+                    fieldName = pro.GetCustomAttribute<DataFieldAttribute>().DataFieldName;
+                    //已添加了具有相同建的項
+                    var p = type.GetProperties();
+                    if (!dic.ContainsKey(fieldName))
+                        dic.Add(fieldName, new SqlTypeValue() { Value = value, Type = valuetype });
                 }
             }
             return dic;
@@ -177,7 +189,7 @@ namespace ORM
             return str.Substring(startIndex, last - startIndex + 1);
         }
 
-        public object GetModel<T>(Expression expwhere)
+        public T GetModel<T>(Expression expwhere)
         {
             Type type = typeof(T);
             string tableName = type.GetCustomAttribute<DataTableAttribute>().TableName;
@@ -194,7 +206,7 @@ namespace ORM
                 }
             }
 
-            return ExecuteScalar(sb.ToString());
+            return (T)ExecuteScalar(sb.ToString());
         }
 
         public void Remove<T>(Expression expwhere)
@@ -223,16 +235,15 @@ namespace ORM
         public string GetDeleteSQL(IDictionary<string, SqlTypeValue> dic)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("delete from " + dic["tablename"]);
+            sb.Append("delete from " + dic["tablename"].Value);
             sb.Append(" where ");
-            foreach (var item in dic)
+          foreach (var item in dic)
             {
-                if (item.Key.ToLower() != "tablename")
-                {
-                    sb.Append(" " + item.Key + "=" + JudgeSqlTypeAndCreate(item.Value) + " and ");
-                }
+                    if (item.Key.ToLower()=="id")
+                    {
+                        sb.Append(" " + item.Key + "=" + JudgeSqlTypeAndCreate(item.Value) );
+                    }                
             }
-            sb.Remove(sb.Length - 1, 1);
             return sb.ToString();
         }
 
@@ -241,7 +252,7 @@ namespace ORM
             if (dic == null)
                 throw new Exception("dictionary is null ..check the parameter");
             StringBuilder sb = new StringBuilder();
-            sb.Append("insert into " + dic["tablename"]);
+            sb.Append("insert into " + dic["tablename"].Value);
             sb.Append(" (");
             foreach (var item in dic)
             {
@@ -268,28 +279,25 @@ namespace ORM
         {
             //condition: only search column name contain id and modify it.  filter uses 'or'
             StringBuilder sb = new StringBuilder();
-            sb.Append("update " + dic["tablename"]);
+            sb.Append("update " + dic["tablename"].Value);
             sb.Append(" set ");
             foreach (var item in dic)
             {
                 if (item.Key.ToLower() != "tablename")
                 {
-                    sb.Append(item.Key + "=" + JudgeSqlTypeAndCreate(item.Value) + " , ");
+                    sb.Append(item.Key + "=" + JudgeSqlTypeAndCreate(item.Value) + " ,");
                 }
             }
             sb.Remove(sb.Length - 1, 1);
             sb.Append(" where ");
             foreach (var item in dic)
             {
-                if (item.Key.ToLower() != "tablename")
-                {
-                    if (item.Value.Value.Contains("id"))
+                    if (item.Key.ToLower()=="id")
                     {
-                        sb.Append(" " + item.Key + "=" + JudgeSqlTypeAndCreate(item.Value) + " or ");
-                    }
-                }
+                        sb.Append(" " + item.Key + "=" + JudgeSqlTypeAndCreate(item.Value) );
+                    }                
             }
-            sb.Remove(sb.Length - 1, 1);
+            //sb.Remove(sb.Length - 1, 1);
             return sb.ToString();
         }
 
@@ -313,7 +321,7 @@ namespace ORM
 
 
     }
-    internal class SqlTypeValue
+    public class SqlTypeValue
     {
         private string _type;
 

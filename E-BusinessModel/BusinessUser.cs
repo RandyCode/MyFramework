@@ -32,7 +32,7 @@ namespace E_BusinessModel
         }
 
         private string user_name;
-        [DataField("business_role_id")]
+        [DataField("user_name")]
         public string UserName
         {
             get { return user_name; }

@@ -24,10 +24,10 @@ namespace ORM
         T Update<T>(T model)
            where T : DBObject, new();
 
-        void Remove<T>(T model)
+        T Remove<T>(T model)
                where T : DBObject, new();
 
-        void Remove<T>(Expression<Func<T, bool>> where = null)
+        T Remove<T>(Expression<Func<T, bool>> where = null)
           where T : DBObject, new();
 
         int ExecuteNonQuery(string sql);

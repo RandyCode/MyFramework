@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ORM.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -95,24 +96,26 @@ namespace ORM
            return b;
        }
 
+       //return format value
        protected override Expression VisitConstant(ConstantExpression c)
        {
            if (c == null) return c;
 
-           this._m_arguments.Add(c.Value);
+           this._m_arguments.Add("'"+c.Value+"'");
            this._m_conditionParts.Push(String.Format("{{{0}}}", this._m_arguments.Count - 1));
 
            return c;
        }
 
+       //return format key
        protected override Expression VisitMemberAccess(MemberExpression m)
        {
            if (m == null) return m;
 
            PropertyInfo propertyInfo = m.Member as PropertyInfo;
            if (propertyInfo == null) return m;
-
-           this._m_conditionParts.Push(String.Format("[{0}]", propertyInfo.Name));
+           string fieldName = propertyInfo.GetCustomAttribute<DataFieldAttribute>().DataFieldName;
+           this._m_conditionParts.Push(String.Format("[{0}]", fieldName));
 
            return m;
        }
