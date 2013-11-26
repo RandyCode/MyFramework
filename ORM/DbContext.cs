@@ -29,7 +29,7 @@ namespace ORM
         /// <summary>
         /// 分頁查找list
         /// </summary>
-        public List<T> GetList<T>(System.Linq.Expressions.Expression<Func<T, bool>> where, System.Linq.Expressions.Expression<Func<T, object>> sortField, bool desc, int rowCount = 0, int pageIndex = 0) where T : DBObject, new()
+        public List<T> GetList<T>(System.Linq.Expressions.Expression<Func<T, bool>> where=null, System.Linq.Expressions.Expression<Func<T, object>> sortField=null, bool desc=false, int rowCount = 0, int pageIndex = 0) where T : DBObject, new()
         {
             return (List<T>)_operater.GetList<T>(where.Body, sortField.Body, desc, rowCount, pageIndex);
         }
@@ -53,15 +53,6 @@ namespace ORM
             return model;
         }
 
-        public int ExecuteNonQuery(string sql)
-        {
-            return _operater.ExecuteNonQuery(sql);
-        }
-
-        public object ExecuteScalar(string sql)
-        {
-            return _operater.ExecuteScalar(sql);
-        }
 
 
         T IDbContext.Create<T>(T model)

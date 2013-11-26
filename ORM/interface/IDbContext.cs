@@ -30,8 +30,6 @@ namespace ORM
         T Remove<T>(Expression<Func<T, bool>> where = null)
           where T : DBObject, new();
 
-        int ExecuteNonQuery(string sql);
 
-        object ExecuteScalar(string sql);
     }
 }

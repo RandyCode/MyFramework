@@ -86,15 +86,19 @@ namespace ORM
             return result;
         }
 
-        public object ExecuteScalar(string sql)
+        public List<T> ExecuteScalar<T>(string sql)
+            where T:DBObject,new()
         {
-            object result = null;
+            List<T> obj = null;
             OpenConnection(() =>
             {
-                _cmd.CommandText = sql;
-                result = _cmd.ExecuteScalar();
+                SqlDataAdapter adapter = new SqlDataAdapter(sql, _conn);
+                DataSet dataset = new DataSet();
+                adapter.Fill(dataset);
+               var result = dataset.Tables[0];
+                obj=  GetEntities<T>(result);
             });
-            return result;
+            return obj;
         }
 
         /// <summary>
@@ -130,6 +134,7 @@ namespace ORM
         }
 
         public object GetList<T>(Expression expwhere, Expression expsort, bool desc, int rowCount, int pageIndex)
+            where T :DBObject,new()
         {
             Type type = typeof(T);
             string tableName = type.GetCustomAttribute<DataTableAttribute>().TableName;
@@ -180,7 +185,7 @@ namespace ORM
                 }
             }
 
-            return ExecuteScalar(sb.ToString());
+            return (List<T>)ExecuteScalar<T>(sb.ToString());
         }
         private string GetSortField(string str)
         {
@@ -189,7 +194,9 @@ namespace ORM
             return str.Substring(startIndex, last - startIndex + 1);
         }
 
-        public T GetModel<T>(Expression expwhere)
+        public T GetModel<T>(Expression expwhere) 
+            where T:DBObject,new()
+
         {
             Type type = typeof(T);
             string tableName = type.GetCustomAttribute<DataTableAttribute>().TableName;
@@ -205,8 +212,7 @@ namespace ORM
                     sb.Append(" where " + sqlwhere);
                 }
             }
-
-            return (T)ExecuteScalar(sb.ToString());
+            return (T)(ExecuteScalar<T>(sb.ToString()).FirstOrDefault());
         }
 
         public void Remove<T>(Expression expwhere)
@@ -318,7 +324,41 @@ namespace ORM
             }
         }
 
+        private List<T> GetEntities<T>(DataTable datatable) where T : DBObject, new()
+        {
+            List<T> list = new List<T>();
+            foreach (DataRow row in datatable.Rows)
+            {
+                list.Add((T)Convert2Object(row, typeof(T)));
+            }
+            return list;
+        }
 
+        /// <summary>
+        /// 轉換實體
+        /// </summary>
+        /// <param name="p">DataRow</param>
+        /// <param name="type">轉換的目標類型</param>
+        /// <returns></returns>
+        private object Convert2Object(DataRow row, Type type)
+        {
+            var instance = type.Assembly.CreateInstance(type.FullName.ToString());
+            string colunmName;
+            foreach (PropertyInfo pro in type.GetProperties())
+            {
+                if (pro.Name == "DbActionType")
+                    break;
+                if (pro.GetCustomAttribute<DataFieldAttribute>().DataFieldName != null)
+                {
+                    colunmName = pro.GetCustomAttribute<DataFieldAttribute>().DataFieldName;
+                    var s = row[colunmName];
+                    pro.SetValue(instance, row[colunmName]);
+                }
+
+            }
+
+            return instance;
+        }
 
     }
     public class SqlTypeValue

@@ -39,7 +39,7 @@ namespace E_BusinessService
             return Common.DbContext.Remove<BusinessUser>(where);
         }
 
-        public List<E_BusinessModel.BusinessUser> GetUserList(System.Linq.Expressions.Expression<Func<E_BusinessModel.BusinessUser, bool>> where, System.Linq.Expressions.Expression<Func<E_BusinessModel.BusinessUser, object>> sortField = null, bool desc = true)
+        public List<E_BusinessModel.BusinessUser> GetUserList(System.Linq.Expressions.Expression<Func<E_BusinessModel.BusinessUser, bool>> where=null, System.Linq.Expressions.Expression<Func<E_BusinessModel.BusinessUser, object>> sortField = null, bool desc = true)
         {
             return Common.DbContext.GetList<BusinessUser>(where, sortField, desc);
         }
