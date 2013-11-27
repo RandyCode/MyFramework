@@ -33,7 +33,7 @@ namespace TestService
             //_userService.RemoveUser(user);         // OK
             //var s= _userService.RemoveUser(x => x.Id == "3867b6d4-8c84-45fc-a43b-ddc8e67bed48" && x.UserName == "randy"); //OK
             //var uu = _userService.GetUserInfo("3867b6d4-8c84-45fc-a43b-ddc8e67bed48"); //OK
-            //var u = _userService.GetUserList(x=>x.UserName=="randy", s=>s.CreateTime,true); //OK
+            var u = _userService.GetUserList(x => x.UserIDCard == 111111111, s => s.CreateTime, true); //OK
             //var page = _userService.GetUserList(null, null, false, 1, 2);  //OK
             //Assert.IsTrue(u.Id == user.Id);
         }

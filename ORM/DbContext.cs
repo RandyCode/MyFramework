@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace ORM
 {
     //Flow: DbContext-> lambdaToSql(just for select sql sentence) -> Dboperater ->DB
-    public class DbContext : IDbContext
+    public sealed class DbContext : IDbContext
     {
 
         private DbOperater _operater = null;

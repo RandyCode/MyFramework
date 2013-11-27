@@ -48,5 +48,13 @@ namespace E_BusinessModel
             set { user_password = value; }
         }
 
+        private int user_idcard;
+        [DataField("user_idcard")]
+        public int UserIDCard
+        {
+            get { return user_idcard; }
+            set { user_idcard = value; }
+        }
+
     }
 }

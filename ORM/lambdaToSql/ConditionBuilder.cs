@@ -98,10 +98,21 @@ namespace ORM
 
        //return format value
        protected override Expression VisitConstant(ConstantExpression c)
-       {
+       {           
            if (c == null) return c;
-
-           this._m_arguments.Add("'"+c.Value+"'");
+           var type = c.Type.Name;
+           if (type.ToLower().Contains("int") || type.ToLower().Contains("double") || type.ToLower().Contains("float"))
+           {
+               this._m_arguments.Add(c.Value);
+           }
+           else if (type.ToLower().Contains("nvarchar") || type.ToLower().Contains("nchar"))
+           {
+               this._m_arguments.Add("N'" + c.Value + "'");
+           }
+           else   //contains bool  datetime  
+           {
+               this._m_arguments.Add("'" + c.Value + "'");
+           }
            this._m_conditionParts.Push(String.Format("{{{0}}}", this._m_arguments.Count - 1));
 
            return c;
@@ -111,6 +122,7 @@ namespace ORM
        protected override Expression VisitMemberAccess(MemberExpression m)
        {
            if (m == null) return m;
+
 
            PropertyInfo propertyInfo = m.Member as PropertyInfo;
            if (propertyInfo == null) return m;

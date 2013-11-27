@@ -310,11 +310,11 @@ namespace ORM
         private string JudgeSqlTypeAndCreate(SqlTypeValue item)
         {
             var type = item.Type;
-            if (type.Contains("int") || type.Contains("double") || type.Contains("float"))
+            if (type.ToLower().Contains("int") || type.ToLower().Contains("double") || type.ToLower().Contains("float"))
             {
                 return item.Value;
             }
-            else if (type.Contains("nvarchar"))
+            else if (type.ToLower().Contains("nvarchar")||type.ToLower().Contains("nchar"))
             {
                 return "N'" + item.Value + "'";
             }
