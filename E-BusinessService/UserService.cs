@@ -39,12 +39,7 @@ namespace E_BusinessService
             return Common.DbContext.Remove<BusinessUser>(where);
         }
 
-        public List<E_BusinessModel.BusinessUser> GetUserList(System.Linq.Expressions.Expression<Func<E_BusinessModel.BusinessUser, bool>> where=null, System.Linq.Expressions.Expression<Func<E_BusinessModel.BusinessUser, object>> sortField = null, bool desc = true)
-        {
-            return Common.DbContext.GetList<BusinessUser>(where, sortField, desc);
-        }
-
-        public List<E_BusinessModel.BusinessUser> GetUserPagedList(System.Linq.Expressions.Expression<Func<E_BusinessModel.BusinessUser, bool>> where, [System.Runtime.InteropServices.OptionalAttribute][System.Runtime.InteropServices.DefaultParameterValueAttribute(null)]System.Linq.Expressions.Expression<Func<E_BusinessModel.BusinessUser, object>> sortField, [System.Runtime.InteropServices.OptionalAttribute][System.Runtime.InteropServices.DefaultParameterValueAttribute(true)]bool desc, int rowCount=0, int pageIndex=0)
+        public List<E_BusinessModel.BusinessUser> GetUserList(System.Linq.Expressions.Expression<Func<E_BusinessModel.BusinessUser, bool>> where = null, System.Linq.Expressions.Expression<Func<E_BusinessModel.BusinessUser, object>> sortField = null, bool desc = false, int rowCount = 0, int pageIndex = 0)
         {
             return Common.DbContext.GetList<BusinessUser>(where, sortField, desc,rowCount,pageIndex);
         }

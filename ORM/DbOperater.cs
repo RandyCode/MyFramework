@@ -6,10 +6,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
-using System.Threading;
 
 namespace ORM
 {
@@ -21,7 +19,9 @@ namespace ORM
 
         public DbOperater()
         {
-            //_connStr = System.Configuration.ConfigurationManager.ConnectionStrings["connStr"].ConnectionString;
+            //share the connectionString
+            //System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
+            //_connStr =config.ConnectionStrings["connStr"].ConnectionString;
             _connStr = "server=.;database=ebusiness;uid=sa;pwd=12345678;";
         }
 
@@ -56,8 +56,8 @@ namespace ORM
         {
             IDictionary<string, SqlTypeValue> dic = MappingAttributte<T>(t);
             //試試不賦值會不會為空。
-            if (t.DbActionType == null)
-                throw new Exception("this model has not DbActionType,plz check it !");
+            //if (t.DbActionType == null)
+            //    throw new Exception("this model has not DbActionType,plz check it !");
             string sql = "";
             switch (t.DbActionType)
             {
@@ -144,7 +144,7 @@ namespace ORM
             //paging
             if (ispaging)
             {
-                sb.Append("select top * " + rowCount + " from ( select ROW_NUMBER() OVER(ORDER BY id) AS rownumber,* from " + tableName + " ) temp ");
+                sb.Append("select top " + rowCount + " * from ( select ROW_NUMBER() OVER(ORDER BY id) AS rownumber,* from " + tableName + " ) temp ");
             }
             else
             {
@@ -178,11 +178,11 @@ namespace ORM
             {
                 ConditionBuilder sortBuilder = new ConditionBuilder();
                 sortBuilder.Build(expsort);
-                if (sortBuilder.Arguments.Length > 0)
-                {
+                //if (sortBuilder.Arguments.Length > 0)
+                //{
                     string sqlsort = GetSortField(sortBuilder.Condition);
                     sb.Append(" order by " + sqlsort + isdesc);
-                }
+                //}
             }
 
             return (List<T>)ExecuteScalar<T>(sb.ToString());

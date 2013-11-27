@@ -9,11 +9,8 @@ namespace ORM
 {
     public interface IDbContext
     {
-        List<T> GetList<T>(Expression<Func<T, bool>> where = null, Expression<Func<T, object>> sortField = null, bool desc = true)
+        List<T> GetList<T>(Expression<Func<T, bool>> where = null, Expression<Func<T, object>> sortField = null, bool desc = true, int rowCount=0, int pageIndex=0)
             where T : DBObject, new();
-
-        List<T> GetList<T>(Expression<Func<T, bool>> where, Expression<Func<T, object>> sortField, bool desc, int rowCount, int pageIndex)
-              where T : DBObject, new();
 
         T GetModel<T>(Expression<Func<T, bool>> where = null)
            where T : DBObject, new();

@@ -29,10 +29,8 @@ namespace E_BusinessService
         BusinessUser RemoveUser(Expression<Func<BusinessUser,bool>> where);
 
         [OperationContract]
-        List<BusinessUser> GetUserList(Expression<Func<BusinessUser, bool>> where=null, Expression<Func<BusinessUser, object>> sortField = null, bool desc = true);
+        List<BusinessUser> GetUserList(Expression<Func<BusinessUser, bool>> where = null, Expression<Func<BusinessUser, object>> sortField = null, bool desc = false, int rowCount = 0, int pageIndex = 0);
 
-        [OperationContract]
-        List<BusinessUser> GetUserPagedList(Expression<Func<BusinessUser, bool>> where=null, Expression<Func<BusinessUser, object>> sortField = null, bool desc = true, int rowCount=0, int pageIndex=0);
 
     }
 }

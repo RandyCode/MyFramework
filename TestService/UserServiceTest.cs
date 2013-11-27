@@ -28,13 +28,13 @@ namespace TestService
                     UserPassWord="wing"
 
             };
-            //var u = _userService.CreateUser(user);
-            //_userService.UpdateUser(user);
-            //_userService.RemoveUser(user);
-            //var s= _userService.RemoveUser(x => x.Id == "3867b6d4-8c84-45fc-a43b-ddc8e67bed48" && x.UserName == "randy");
-            //只存在2中 即要‘’和不要。。 是否是整形
-            //_userService.GetUserInfo()
-           var uu= _userService.GetUserInfo("3867b6d4-8c84-45fc-a43b-ddc8e67bed48");
+            //var u = _userService.CreateUser(user); // OK
+            //_userService.UpdateUser(user);        //  OK
+            //_userService.RemoveUser(user);         // OK
+            //var s= _userService.RemoveUser(x => x.Id == "3867b6d4-8c84-45fc-a43b-ddc8e67bed48" && x.UserName == "randy"); //OK
+            //var uu = _userService.GetUserInfo("3867b6d4-8c84-45fc-a43b-ddc8e67bed48"); //OK
+            //var u = _userService.GetUserList(x=>x.UserName=="randy", s=>s.CreateTime,true); //OK
+            //var page = _userService.GetUserList(null, null, false, 1, 2);  //OK
             //Assert.IsTrue(u.Id == user.Id);
         }
     }
