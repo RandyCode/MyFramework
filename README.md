@@ -1,12 +1,12 @@
 WCFService
 ==========
 
-all service in here
+All service in here
 
 
 
 
-history
+HISTORY
 =======
 
-now just finish a simple ORM frame
+Now just finish a simple ORM frame
