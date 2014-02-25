@@ -55,7 +55,6 @@ namespace ORM
             where T : DBObject, new()
         {
             IDictionary<string, SqlTypeValue> dic = MappingAttributte<T>(t);
-            //試試不賦值會不會為空。
             //if (t.DbActionType == null)
             //    throw new Exception("this model has not DbActionType,plz check it !");
             string sql = "";
@@ -178,11 +177,8 @@ namespace ORM
             {
                 ConditionBuilder sortBuilder = new ConditionBuilder();
                 sortBuilder.Build(expsort);
-                //if (sortBuilder.Arguments.Length > 0)
-                //{
                     string sqlsort = GetSortField(sortBuilder.Condition);
                     sb.Append(" order by " + sqlsort + isdesc);
-                //}
             }
 
             return (List<T>)ExecuteScalar<T>(sb.ToString());
