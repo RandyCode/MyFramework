@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Aspect
 {
-   private static class LazyInitClass
+    static class LazyInitClass
    {
-       private static UnityContainer _singel;
+        static UnityContainer _singel;
 
        public static UnityContainer Single
        {
@@ -23,7 +23,7 @@ namespace Aspect
            }
        }
 
-       private static LazyInitClass()
+        static LazyInitClass()
        {
            MyUnityContainer.Init();
        }

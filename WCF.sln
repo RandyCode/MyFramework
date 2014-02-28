@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-BusinessTestService", "Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspect", "Aspect\Aspect.csproj", "{EC5DD6C9-D21F-48DF-9BD4-4EE13C8842E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TEXTAOP", "TEXTAOP\TEXTAOP.csproj", "{2324A2BB-5A76-460E-854D-A8C454B31D6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{EC5DD6C9-D21F-48DF-9BD4-4EE13C8842E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC5DD6C9-D21F-48DF-9BD4-4EE13C8842E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC5DD6C9-D21F-48DF-9BD4-4EE13C8842E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2324A2BB-5A76-460E-854D-A8C454B31D6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2324A2BB-5A76-460E-854D-A8C454B31D6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2324A2BB-5A76-460E-854D-A8C454B31D6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2324A2BB-5A76-460E-854D-A8C454B31D6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
