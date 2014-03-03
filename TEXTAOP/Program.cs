@@ -6,25 +6,37 @@ using System.Threading.Tasks;
 using Aspect;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using Microsoft.Practices.Unity;
+using System.Configuration;
 
 namespace TEXTAOP
 {
     class Program
     {
+        [Dependency]
+        static IOutPut ii { get; set; }
+
         static void Main(string[] args)
         {
             IUnityContainer c = new UnityContainer();
-            c.AddNewExtension<Interception>()
-                .Configure<Interception>()
-            .SetInterceptorFor<IOutPut>(new InterfaceInterceptor()); // 泛型要动态注入 用IUnityContainer
-
             c.RegisterType<IOutPut, Output>();
-            IOutPut ii = c.Resolve<IOutPut>();
-            ii.Output();
+            c.AddNewExtension<Interception>()
+              .Configure<Interception>()
+            .SetInterceptorFor<IOutPut>(new InterfaceInterceptor()); // 泛型要动态注入 用IUnityContainer   自己包一层 ?
+
+
+            UnityContainerRegister uu = new UnityContainerRegister();
+            uu.Register(new UnityContainer());
+
+            var b = c.Resolve<IOutPut>();
+
+            b.Output();
             Console.WriteLine();
+            b.put();
 
 
-            ii.put();
+
+
+            //Console.WriteLine(typeof(sd).ToString());
 
             Console.ReadKey();
         }
@@ -38,12 +50,12 @@ namespace TEXTAOP
     }
 
 
-    [Before]
-    [After] 
-    [Call]
+    //[Before]
+    //[After] 
+    //[Call]  
+    [First]
     public class Output : IOutPut
     {
-       [First]
         void IOutPut.Output()
         {
             Console.WriteLine("11111");
@@ -88,6 +100,20 @@ namespace TEXTAOP
             Console.WriteLine("after");
         }
     }
+
+    public class LoadInfoAttribute : InitializationAttribute
+    {
+        public override void OnInit(IMethodInvocation input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void OnRelease(IMethodInvocation input)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 
 
 

@@ -8,34 +8,35 @@ using System.Threading.Tasks;
 
 namespace Aspect
 {
-    static class LazyInitClass
-   {
+
+    static class InitContainer
+    {
         static UnityContainer _singel;
 
-       public static UnityContainer Single
-       {
-           get
-           { 
-               if (_singel == null)
-                   _singel = new UnityContainer();
+        public static UnityContainer Single
+        {
+            get
+            {
+                if (_singel == null)
+                    _singel = new UnityContainer();
 
-               return _singel;   
-           }
-       }
+                return _singel;
+            }
+        }
 
-        static LazyInitClass()
-       {
-           MyUnityContainer.Init();
-       }
-   }
+        static InitContainer()
+        {
+            MyUnityContainer.Init();            
+        }
 
+    }
 
     public class MyUnityContainer
     {
 
         public static IUnityContainer Instance
         {
-            get { return LazyInitClass.Single; }
+            get { return InitContainer.Single; }
         }
 
         private static IUnityContanierRegister GetUnityContainerRegister()
@@ -46,6 +47,7 @@ namespace Aspect
                 try { return (Activator.CreateInstance(Type.GetType(str)) as IUnityContanierRegister); }
                 catch (Exception) { }
             }
+           
             return null;
         }
 

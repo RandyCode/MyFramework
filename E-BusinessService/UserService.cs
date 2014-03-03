@@ -11,7 +11,7 @@ using E_BusinessModel;
 namespace E_BusinessService
 {
     // 注意: 使用“重构”菜单上的“重命名”命令，可以同时更改代码和配置文件中的类名“DBService”。
-    public class UserService : IUserService
+    public class UserService: BaseService , IUserService
     {
 
         public E_BusinessModel.BusinessUser GetUserInfo(string id)
