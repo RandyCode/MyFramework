@@ -1,7 +1,7 @@
 MY FRAMEWORK
 ==========
 
-Set up by five project
+Total five parts project
 Include ORM Project, Model, Aspect project, Common project and WCF service project
 
 
