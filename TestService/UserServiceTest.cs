@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using E_BusinessService;
-using E_BusinessModel;
-using E_BusinessCommon;
+using Service;
+using Model;
+
 
 namespace TestService
 {
