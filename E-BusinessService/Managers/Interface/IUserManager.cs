@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace E_BusinessService
 {
-    [Aop.Init]
-    [Aop.VerifyAuthority]
-    public class BaseService
+    public interface IUserManager
     {
+        void CheckUserStatus();
     }
 }

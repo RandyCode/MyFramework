@@ -21,7 +21,7 @@ namespace Aspect
         {
             IMethodReturn result;
             try
-            {
+            {       
                 this.OnInit(input);
                 result = getNext()(input, getNext);
             }
@@ -36,5 +36,6 @@ namespace Aspect
             return result;
 
         }
+
     }
 }

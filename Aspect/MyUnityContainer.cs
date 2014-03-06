@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Aspect
 {
-
     static class InitContainer
     {
         static UnityContainer _singel;
@@ -31,6 +30,9 @@ namespace Aspect
 
     }
 
+    /// <summary>
+    /// 實例化UnityContainer
+    /// </summary>
     public class MyUnityContainer
     {
 

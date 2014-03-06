@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using System.Configuration;
 
 namespace ORM
 {
@@ -19,10 +20,9 @@ namespace ORM
 
         public DbOperater()
         {
-            //share the connectionString
-            //System.Configuration.Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.None);
-            //_connStr =config.ConnectionStrings["connStr"].ConnectionString;
-            _connStr = "server=.;database=ebusiness;uid=sa;pwd=12345678;";
+
+            _connStr = ConfigurationManager.AppSettings["connStr"];
+            //_connStr = "server=.;database=ebusiness;uid=sa;pwd=12345678;";
         }
 
         private void OpenConnection(Action action)

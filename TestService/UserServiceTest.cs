@@ -36,6 +36,7 @@ namespace TestService
             var u = _userService.GetUserList(x => x.UserIDCard == 111111111, s => s.CreateTime, true); //OK
             //var page = _userService.GetUserList(null, null, false, 1, 2);  //OK
             //Assert.IsTrue(u.Id == user.Id);
+
         }
     }
 }

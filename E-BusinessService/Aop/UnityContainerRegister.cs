@@ -1,21 +1,18 @@
 ﻿using Aspect;
+using E_BusinessService;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TEXTAOP
+namespace E_BusinessService
 {
     public class UnityContainerRegister : IUnityContanierRegister
     {
         public void Register(IUnityContainer container)
         {
             _container = container;
-            RegistNSetInterceptor<IOutPut, Output>();
-            RegistNSetInterceptor<Itext, text>();
+            //RegistNSetInterceptor<IOutPut, Output>();
+
+            RegistNSetInterceptor<IUserManager,UserManager>();
 
         }
 
@@ -23,7 +20,7 @@ namespace TEXTAOP
         private IUnityContainer _container;
 
         /// <summary>
-        /// 
+        /// RegisterType
         /// </summary>
         /// <typeparam name="I">Interface</typeparam>
         /// <typeparam name="T">Instance Class</typeparam>

@@ -10,37 +10,40 @@ using System.Configuration;
 
 namespace TEXTAOP
 {
-    class Program
+
+    public class text : Itext
     {
         [Dependency]
-        static IOutPut ii { get; set; }
+        public IOutPut ii { get; set; }
+
+        public void say()
+        {
+            ii.Output();
+            Console.WriteLine();
+            ii.put();
+        }
+    }
+
+    public interface Itext
+    {
+        void say();
+    }
+
+
+    class Program
+    {
 
         static void Main(string[] args)
         {
-            IUnityContainer c = new UnityContainer();
-            c.RegisterType<IOutPut, Output>();
-            c.AddNewExtension<Interception>()
-              .Configure<Interception>()
-            .SetInterceptorFor<IOutPut>(new InterfaceInterceptor()); // 泛型要动态注入 用IUnityContainer   自己包一层 ?
 
-
-            UnityContainerRegister uu = new UnityContainerRegister();
-            uu.Register(new UnityContainer());
-
-            var b = c.Resolve<IOutPut>();
-
-            b.Output();
-            Console.WriteLine();
-            b.put();
-
-
-
-
-            //Console.WriteLine(typeof(sd).ToString());
+            var bb = MyUnityContainer.Instance.Resolve<text>();
+            bb.say();
 
             Console.ReadKey();
         }
     }
+
+
 
 
     public interface IOutPut
@@ -49,11 +52,9 @@ namespace TEXTAOP
         void put();
     }
 
-
-    //[Before]
-    //[After] 
-    //[Call]  
+    [LoadInit]
     [First]
+    [After]
     public class Output : IOutPut
     {
         void IOutPut.Output()
@@ -101,16 +102,17 @@ namespace TEXTAOP
         }
     }
 
-    public class LoadInfoAttribute : InitializationAttribute
+    public class LoadInitAttribute : InitializationAttribute
     {
         public override void OnInit(IMethodInvocation input)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Init");
+            //MyUnityContainer.Instance.Resolve();
         }
 
         public override void OnRelease(IMethodInvocation input)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Release");
         }
     }
 
