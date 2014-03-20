@@ -9,6 +9,8 @@ namespace ORM
 {
     public interface IDbContext
     {
+        DbOperater Operater { get; set; }
+
         List<T> GetList<T>(Expression<Func<T, bool>> where = null, Expression<Func<T, object>> sortField = null, bool desc = true, int rowCount=0, int pageIndex=0)
             where T : DBObject, new();
 

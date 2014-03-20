@@ -11,9 +11,8 @@ namespace Service
         {
             _container = container;
             //RegistNSetInterceptor<IOutPut, Output>();
-
             RegistNSetInterceptor<IUserManager,UserManager>();
-
+           
         }
 
         #region private method helper

@@ -17,46 +17,77 @@ namespace ORM
         private string _connStr = null;
         private SqlConnection _conn;
         private SqlCommand _cmd;
+        private List<SqlTransaction> _tran;
+        private bool _beginTrasaction = false;
+
+        public List<SqlTransaction> Tran
+        {
+            get { if (_tran == null) _tran = new List<SqlTransaction>(); return _tran; }
+            set { _tran = value; }
+        }
+
 
         public DbOperater()
         {
-
             _connStr = ConfigurationManager.AppSettings["connStr"];
-            //_connStr = "server=.;database=ebusiness;uid=sa;pwd=12345678;";
         }
 
-        private void OpenConnection(Action action)
+        private void ExecuteCommand(Action action)
         {
-            using (_conn = new SqlConnection(_connStr))
-            {
-                //把鏈接放進當前線程中，一次請求只建立一次鏈接。 
-                _conn.Open();
-                using (_cmd = new SqlCommand())
+            OpenConnection();
+            using (_cmd = new SqlCommand())
+            {           
+                _cmd.Connection = _conn;
+                _cmd.CommandType = CommandType.Text;
+                if (_beginTrasaction)
                 {
-                    _cmd.Connection = _conn;
-                    _cmd.CommandType = CommandType.Text;
-                    try
-                    {
-                        action();
-                    }
-                    catch (SqlException ex)
-                    {
-                        throw new Exception(ex.Message);
-                    }
-
+                    var transaction = _conn.BeginTransaction(); //must run in connection open status          
+                    _cmd.Transaction = transaction;
+                    Tran.Add(transaction);
                 }
-                //當前線程結束前才close鏈接
-                _conn.Close();
+                try
+                {
+                    action();
+                }
+                catch (DataException ex)
+                {
+                    throw new DataException(ex.Message);
+                }
+                finally
+                {
+                    if (!_beginTrasaction)
+                    {
+                        CloseConnection();
+                    }
+                   
+                }
+
             }
+
         }
 
+        public void BeginTransaction()
+        {
+            _beginTrasaction = true;
+        }
+
+        public void OpenConnection()
+        {
+            _conn = new SqlConnection(_connStr);
+            _conn.Open();
+        }
+
+        public void CloseConnection()
+        {
+            _conn.Close();
+            _conn.Dispose();
+            Tran = null;
+        }
 
         public int ExecuteNonQuery<T>(T t)
             where T : DBObject, new()
         {
             IDictionary<string, SqlTypeValue> dic = MappingAttributte<T>(t);
-            //if (t.DbActionType == null)
-            //    throw new Exception("this model has not DbActionType,plz check it !");
             string sql = "";
             switch (t.DbActionType)
             {
@@ -69,7 +100,7 @@ namespace ORM
                 case CURDActionEnum.Update:
                     sql = GetUpdateSQL(dic);
                     break;
-                default: throw new Exception("cannot handler this DbActionType");
+                default: throw new Exception("cannot handle this DbActionType");
             }
             return ExecuteNonQuery(sql);
         }
@@ -77,7 +108,7 @@ namespace ORM
         public int ExecuteNonQuery(string sql)
         {
             int result = 0;
-            OpenConnection(() =>
+            ExecuteCommand(() =>
             {
                 _cmd.CommandText = sql;
                 result = _cmd.ExecuteNonQuery();
@@ -86,16 +117,16 @@ namespace ORM
         }
 
         public List<T> ExecuteScalar<T>(string sql)
-            where T:DBObject,new()
+            where T : DBObject, new()
         {
             List<T> obj = null;
-            OpenConnection(() =>
+            ExecuteCommand(() =>
             {
                 SqlDataAdapter adapter = new SqlDataAdapter(sql, _conn);
                 DataSet dataset = new DataSet();
                 adapter.Fill(dataset);
-               var result = dataset.Tables[0];
-                obj=  GetEntities<T>(result);
+                var result = dataset.Tables[0];
+                obj = GetEntities<T>(result);
             });
             return obj;
         }
@@ -107,7 +138,7 @@ namespace ORM
             where T : DBObject, new()
         {
             if (t == null)
-                throw new Exception("client post a null entity,plz check it again.");
+                throw new Exception("client post a null entity,pls check it again.");
             IDictionary<string, SqlTypeValue> dic = new Dictionary<string, SqlTypeValue>();
             Type type = typeof(T);
             string tableName = type.GetCustomAttribute<DataTableAttribute>().TableName;
@@ -133,7 +164,7 @@ namespace ORM
         }
 
         public object GetList<T>(Expression expwhere, Expression expsort, bool desc, int rowCount, int pageIndex)
-            where T :DBObject,new()
+            where T : DBObject, new()
         {
             Type type = typeof(T);
             string tableName = type.GetCustomAttribute<DataTableAttribute>().TableName;
@@ -177,8 +208,8 @@ namespace ORM
             {
                 ConditionBuilder sortBuilder = new ConditionBuilder();
                 sortBuilder.Build(expsort);
-                    string sqlsort = GetSortField(sortBuilder.Condition);
-                    sb.Append(" order by " + sqlsort + isdesc);
+                string sqlsort = GetSortField(sortBuilder.Condition);
+                sb.Append(" order by " + sqlsort + isdesc);
             }
 
             return (List<T>)ExecuteScalar<T>(sb.ToString());
@@ -190,9 +221,8 @@ namespace ORM
             return str.Substring(startIndex, last - startIndex + 1);
         }
 
-        public T GetModel<T>(Expression expwhere) 
-            where T:DBObject,new()
-
+        public T GetModel<T>(Expression expwhere)
+            where T : DBObject, new()
         {
             Type type = typeof(T);
             string tableName = type.GetCustomAttribute<DataTableAttribute>().TableName;
@@ -239,12 +269,12 @@ namespace ORM
             StringBuilder sb = new StringBuilder();
             sb.Append("delete from " + dic["tablename"].Value);
             sb.Append(" where ");
-          foreach (var item in dic)
+            foreach (var item in dic)
             {
-                    if (item.Key.ToLower()=="id")
-                    {
-                        sb.Append(" " + item.Key + "=" + JudgeSqlTypeAndCreate(item.Value) );
-                    }                
+                if (item.Key.ToLower() == "id")
+                {
+                    sb.Append(" " + item.Key + "=" + JudgeSqlTypeAndCreate(item.Value));
+                }
             }
             return sb.ToString();
         }
@@ -294,10 +324,10 @@ namespace ORM
             sb.Append(" where ");
             foreach (var item in dic)
             {
-                    if (item.Key.ToLower()=="id")
-                    {
-                        sb.Append(" " + item.Key + "=" + JudgeSqlTypeAndCreate(item.Value) );
-                    }                
+                if (item.Key.ToLower() == "id")
+                {
+                    sb.Append(" " + item.Key + "=" + JudgeSqlTypeAndCreate(item.Value));
+                }
             }
             //sb.Remove(sb.Length - 1, 1);
             return sb.ToString();
@@ -310,7 +340,7 @@ namespace ORM
             {
                 return item.Value;
             }
-            else if (type.ToLower().Contains("nvarchar")||type.ToLower().Contains("nchar"))
+            else if (type.ToLower().Contains("nvarchar") || type.ToLower().Contains("nchar"))
             {
                 return "N'" + item.Value + "'";
             }

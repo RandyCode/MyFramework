@@ -11,48 +11,47 @@ using Common;
 namespace Service
 {
     // 注意: 使用“重构”菜单上的“重命名”命令，可以同时更改代码和配置文件中的类名“DBService”。
-    public class UserService : BaseService, IUserService
+    public class UserService :  IUserService
     {
         [Dependency]
         IUserManager UserManager { set; get; }
 
-        [Aop.WCFTransaction]
+      
         public Model.BusinessUser GetUserInfo(string id)
         {
-            return Helper.DbContext.GetModel<BusinessUser>(x => x.Id == id);
+            return UserManager.GetUserInfo(id);
         }
 
-        [Aop.WCFTransaction]
+
         public Model.BusinessUser CreateUser(Model.BusinessUser user)
         {
-            return Helper.DbContext.Create<BusinessUser>(user);
+            return UserManager.CreateUser(user);
         }
 
-        [Aop.WCFTransaction]
+ 
         public Model.BusinessUser UpdateUser(Model.BusinessUser user)
         {
-            UserManager.CheckUserStatus();
-            return Helper.DbContext.Update<BusinessUser>(user);
+
+            return UserManager.UpdateUser(user);
+
         }
 
-        [Aop.WCFTransaction]
+  
         public Model.BusinessUser RemoveUser(Model.BusinessUser user)
         {
-            UserManager.CheckUserStatus();
-            return Helper.DbContext.Remove<BusinessUser>(user);
+            return UserManager.RemoveUser(user);
         }
 
-        [Aop.WCFTransaction]
+    
         public Model.BusinessUser RemoveUser(System.Linq.Expressions.Expression<Func<Model.BusinessUser, bool>> where)
         {
-            UserManager.CheckUserStatus();
-            return Helper.DbContext.Remove<BusinessUser>(where);
-        }
 
-        [Aop.WCFTransaction]
+            return UserManager.RemoveUser(where);
+        }
+    
         public List<Model.BusinessUser> GetUserList(System.Linq.Expressions.Expression<Func<Model.BusinessUser, bool>> where = null, System.Linq.Expressions.Expression<Func<Model.BusinessUser, object>> sortField = null, bool desc = false, int rowCount = 0, int pageIndex = 0)
         {
-            return Helper.DbContext.GetList<BusinessUser>(where, sortField, desc, rowCount, pageIndex);
+            return UserManager.GetUserList(where, sortField, desc, rowCount, pageIndex);
         }
 
 

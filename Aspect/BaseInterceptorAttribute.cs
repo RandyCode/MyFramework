@@ -1,13 +1,12 @@
 ﻿using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 
 namespace Aspect
 {
+    [ConfigurationElementType(typeof(CustomCallHandlerData))]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Interface)]
    public abstract class BaseInterceptorAttribute:HandlerAttribute,ICallHandler
     {
        protected BaseInterceptorAttribute() { }

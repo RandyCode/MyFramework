@@ -64,8 +64,8 @@
     <Compile Include="Aop\Attributes\BeforeMethodAttribute.cs" />
     <Compile Include="Aop\Attributes\AfterMethodAttribute.cs" />
     <Compile Include="Aop\UnityContainerRegister.cs" />
-    <Compile Include="BaseService.cs" />
-    <Compile Include="IUserService.cs" />
+    <Compile Include="Managers\BaseManager.cs" />
+    <Compile Include="interface\IUserService.cs" />
     <Compile Include="Managers\Interface\IUserManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,9 +93,7 @@
       <Name>ORM</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="interface\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\WCF\Microsoft.VisualStudio.ServiceModel.targets" />
   <ProjectExtensions>

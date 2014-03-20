@@ -1,6 +1,7 @@
 ﻿using Aspect;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace TEXTAOP
             _container = container;
             RegistNSetInterceptor<IOutPut, Output>();
             RegistNSetInterceptor<Itext, text>();
-
+            _container.RegisterType<IUserManager, UserManager>();
+            RegistNSetInterceptor<IUserService, UserService>();
         }
 
         #region private method helper

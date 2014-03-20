@@ -7,14 +7,20 @@ namespace ORM
     public sealed class DbContext : IDbContext
     {
 
-        private DbOperater _operater = null;
+        private DbOperater _operater;
+
+        public DbOperater Operater  
+        {
+            get { return _operater; }
+            set { _operater = value; }
+        }
 
         public DbContext()
         {
             _operater = new DbOperater();
-
+           
         }
-
+ 
         /// <summary>
         /// 排序查找list
         /// </summary>
@@ -67,5 +73,8 @@ namespace ORM
             var res = _operater.ExecuteNonQuery<T>(model);
             return res > 0 ? model : null;
         }
+
+
+
     }
 }

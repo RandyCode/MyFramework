@@ -8,7 +8,7 @@ namespace Service
 {
     [Aop.Init]
     [Aop.VerifyAuthority]
-    public class BaseService
+    public class BaseManager
     {
     }
 }
