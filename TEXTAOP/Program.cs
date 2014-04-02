@@ -41,16 +41,16 @@ namespace TEXTAOP
 
             var bb = MyUnityContainer.Instance.Resolve<text>();
             bb.say();
-            //IUserService us =MyUnityContainer.Instance.Resolve<UserService>();
-            //us.CreateUser(new Model.BusinessUser
-            //{
-            //    Id = Guid.NewGuid().ToString(),
-            //    BusinessRoleId = "1CB7A8B4-ECEF-4927-8C57-0592122FAD2E",
-            //    CreateTime = DateTime.Now,
-            //    UserIDCard = 213,
-            //    UserName = "xiaoqibao",
-            //    UserPassWord = "12345"
-            //});
+            IUserService us = MyUnityContainer.Instance.Resolve<UserService>();
+            us.CreateUser(new Model.BusinessUser
+            {
+                Id = Guid.NewGuid().ToString(),
+                BusinessRoleId = "1CB7A8B4-ECEF-4927-8C57-0592122FAD2E",
+                CreateTime = DateTime.Now,
+                UserIDCard = 213,
+                UserName = "xiaoqibao",
+                UserPassWord = "12345"
+            });
 
 
 
