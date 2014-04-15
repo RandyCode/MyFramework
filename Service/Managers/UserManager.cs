@@ -1,4 +1,5 @@
 ﻿using Common;
+using Microsoft.Practices.Unity;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,6 @@ namespace Service
 {
     public class UserManager : BaseManager,IUserManager 
     {
-        public void CheckUserStatus()
-        {
-
-        }
-
         public Model.BusinessUser GetUserInfo(string id)
         {
           return  Helper.DbContext.GetModel<BusinessUser>(x => x.Id == id);
@@ -23,7 +19,6 @@ namespace Service
         [Aop.WCFTransaction]
         public Model.BusinessUser CreateUser(Model.BusinessUser user)
         {
-            Helper.DbContext.Create<BusinessUser>(user);   //randy
             return Helper.DbContext.Create<BusinessUser>(user);
         }
 

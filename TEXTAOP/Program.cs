@@ -38,25 +38,37 @@ namespace TEXTAOP
 
         static void Main(string[] args)
         {
-
-            var bb = MyUnityContainer.Instance.Resolve<text>();
+            //var bb = new text();   bb.say();  错误、、 两个都要注册到容器中  IOutPut Itext
+            var bb = MyUnityContainer.Instance.Resolve<Itext>();  //
             bb.say();
-            IUserService us = MyUnityContainer.Instance.Resolve<UserService>();
-            us.CreateUser(new Model.BusinessUser
-            {
-                Id = Guid.NewGuid().ToString(),
-                BusinessRoleId = "1CB7A8B4-ECEF-4927-8C57-0592122FAD2E",
-                CreateTime = DateTime.Now,
-                UserIDCard = 213,
-                UserName = "xiaoqibao",
-                UserPassWord = "12345"
-            });
+            //IUserService us = MyUnityContainer.Instance.Resolve<UserService>();
+            //us.CreateUser(new Model.BusinessUser
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    BusinessRoleId = "1CB7A8B4-ECEF-4927-8C57-0592122FAD2E",
+            //    CreateTime = DateTime.Now,
+            //    UserIDCard = 213,
+            //    UserName = "xiaoqibao",
+            //    UserPassWord = "12345"
+            //});
+            //IUserManager us = MyUnityContainer.Instance.Resolve<IUserManager>();
 
-
-
+            //us.CreateUser(new Model.BusinessUser
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    BusinessRoleId = "1CB7A8B4-ECEF-4927-8C57-0592122FAD2E",
+            //    CreateTime = DateTime.Now,
+            //    UserIDCard = 213,
+            //    UserName = "xiaoqibao",
+            //    UserPassWord = "12345"
+            //});
+     
             Console.ReadKey();
         }
     }
+
+
+
 
 
     #region ioc + aop
@@ -82,6 +94,8 @@ namespace TEXTAOP
             Console.WriteLine("22222");
         }
     }
+
+
 
 
     public class FirstAttribute : AuthenticationAttribute

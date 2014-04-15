@@ -1,7 +1,6 @@
 ﻿using Aspect;
 using Common;
 using Microsoft.Practices.Unity.InterceptionExtension;
-using ORM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +15,11 @@ namespace Service.Aop
         {
             Console.WriteLine("transaction attribute");
             Helper.DbContext.Operater.BeginTransaction();
-            TransactionContext context = new TransactionContext(Helper.DbContext.Operater.Tran);
+            //TransactionContext context = new TransactionContext(Helper.DbContext.Operater.Tran);
             Exception ex = null;
             try
             {
+                Console.WriteLine("wcf trasaction");
                 var result = getNext()(input, getNext);
                 ex = result.Exception;
                 return result;
@@ -30,21 +30,21 @@ namespace Service.Aop
             }
             finally
             {
-                TryRollBack(context, ex);
+                //TryRollBack(context, ex);
             }
         }
 
-        private void TryRollBack(TransactionContext Context, Exception ex)
-        {
-            try
-            {
-                if (ex == null)
-                    Context.Commit();
-                else
-                    Context.RollBack();
-            }
-            catch { }
-            finally { Helper.DbContext.Operater.CloseConnection(); }
-        }
+        //private void TryRollBack(TransactionContext Context, Exception ex)
+        //{
+        //    try
+        //    {
+        //        if (ex == null)
+        //            Context.Commit();
+        //        else
+        //            Context.RollBack();
+        //    }
+        //    catch { }
+        //    finally { Helper.DbContext.Operater.CloseConnection(); }
+        //}
     }
 }

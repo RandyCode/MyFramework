@@ -17,8 +17,7 @@ namespace TEXTAOP
             _container = container;
             RegistNSetInterceptor<IOutPut, Output>();
             RegistNSetInterceptor<Itext, text>();
-            _container.RegisterType<IUserManager, UserManager>();
-            RegistNSetInterceptor<IUserService, UserService>();
+            RegistNSetInterceptor<IUserManager, UserManager>();
         }
 
         #region private method helper

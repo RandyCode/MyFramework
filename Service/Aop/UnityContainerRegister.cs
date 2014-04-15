@@ -1,5 +1,4 @@
 ﻿using Aspect;
-using Service;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 

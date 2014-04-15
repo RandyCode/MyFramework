@@ -10,8 +10,6 @@ namespace Service
 {
     public interface IUserManager
     {
-        void CheckUserStatus();
-
         BusinessUser GetUserInfo(string id);
 
 
