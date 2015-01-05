@@ -9,13 +9,9 @@ namespace CommonHelper
 {
     public class FileLogger : BaseLogger
     {
-
-        public FileLogger()
+        public override void Write(string message,object arguments)
         {
-            base.Log = Log4netBuilder.GetLog(LogMediaEnum.FILE);
-        }
-        public override void Write(string message)
-        {
+            Log = Log4netBuilder.GetLog(LogMediaEnum.FILE);
             Log.Info(message);
         }
     }

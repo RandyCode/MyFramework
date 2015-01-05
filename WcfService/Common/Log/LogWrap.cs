@@ -15,9 +15,20 @@ namespace CommonHelper
 
         public ILog ErrorLog { get; set; }
 
-        public  void Write(string message, LogMediaEnum[] mediaArray=null)
+
+        public void Write(string message)
         {
-            if (mediaArray == null) 
+            Write(message, null);
+        }
+
+        public void Write(string message, LogMediaEnum[] mediaArray)
+        {
+            Write(message, mediaArray, null);
+        }
+
+        public void Write(string message, LogMediaEnum[] mediaArray, object obj)
+        {
+            if (mediaArray == null)
                 mediaArray = new LogMediaEnum[] { LogMediaEnum.FILE };
 
             try
@@ -25,7 +36,9 @@ namespace CommonHelper
                 foreach (var type in mediaArray)
                 {
                     var logger = LoggerFactory.GetLogger(type);
-                    logger.Write(message);             
+                    if (logger == null) continue;
+                    ErrorLog = logger.Log;
+                    logger.Write(message,obj);
                 }
 
             }
@@ -37,6 +50,5 @@ namespace CommonHelper
                 }
             }
         }
-
     }
 }

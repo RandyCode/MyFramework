@@ -32,7 +32,7 @@ namespace TestConsole
             //var ss = svic.GetData();
 
             ILogWrap log = new LogWrap();
-            log.Write("Randy Log");
+            log.Write("Randy Log Email", new LogMediaEnum[] { LogMediaEnum.EMAIL }, new { Email="361703739@qq.com"});
 
 
             //XmlDocument xmldoc = new XmlDocument();
@@ -49,22 +49,6 @@ namespace TestConsole
 
             Console.ReadLine();
         }
-
-
-
-        static void Go()
-        {
-            lock (locker) {
-                if (!done)
-                {
-                    Thread.Sleep(1000); // 模拟耗时操作
-                    Console.WriteLine("Done");
-                    done = true;
-                }
-            }
-  
-        }
-
 
 
     }

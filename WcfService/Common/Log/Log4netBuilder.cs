@@ -11,31 +11,33 @@ namespace CommonHelper
 {
     public class Log4netBuilder
     {
+        private static string _xml = string.Empty;
+        public static string _email = string.Empty;
+        public static string _connectionStr = string.Empty;
 
         public static ILog GetLog(LogMediaEnum type)
         {
             XmlDocument xmldoc = new XmlDocument();
-            string xml = string.Empty;
             switch (type)
             {
                 case LogMediaEnum.FILE:
-                    xml = "<?xml version='1.0' encoding='utf-8' ?> <log4net>  <logger name='Logger'> <appender-ref ref='FileAppender'/>  <level value='info'/> </logger>";
-                    xml += "<appender name='FileAppender' type='log4net.Appender.RollingFileAppender'> <file value='logs/log' /> <appendToFile value='true' /> <rollingStyle value='Date' /> <datePattern value='_yyyy-MM-dd&quot;.log&quot;' /> <layout type='log4net.Layout.PatternLayout'>   <conversionPattern value='%newline记录时间：%date  %newline 线程ID:[%thread] %newline 日志级别：%-5level %newline 出错类：%logger property:[%property{NDC}]  错误描述：%message%newline ' /> </layout> </appender>";
-                    xml += "</log4net>";
+                    _xml = "<?xml version='1.0' encoding='utf-8' ?> <log4net>  <logger name='Logger'> <appender-ref ref='FileAppender'/>  <level value='info'/> </logger>";
+                    _xml += "<appender name='FileAppender' type='log4net.Appender.RollingFileAppender'> <file value='logs/log' /> <appendToFile value='true' /> <rollingStyle value='Date' /> <datePattern value='_yyyy-MM-dd&quot;.log&quot;' /> <layout type='log4net.Layout.PatternLayout'>   <conversionPattern value='%newline记录时间：%date   %newline 日志级别：%-5level %newline 出错类：%logger property:[%property{NDC}]  错误描述：%message%newline ' /> </layout> </appender>";
+                    _xml += "</log4net>";
                     break;
                 case LogMediaEnum.EMAIL:
-                    xml = "<?xml version='1.0' encoding='utf-8' ?> <log4net>  <logger name='Logger'> <appender-ref ref='123'/>  <level value='info'/> </logger>";
-                    xml += "<appender name='123' type='log4net.Appender.RollingFileAppender'> <file value='logs/log' /> <appendToFile value='true' /> <rollingStyle value='Date' /> <datePattern value='_yyyy-MM-dd&quot;.log&quot;' /> <layout type='log4net.Layout.PatternLayout'>   <conversionPattern value='%newline记录时间：%date  %newline 线程ID:[%thread] %newline 日志级别：%-5level %newline 出错类：%logger property:[%property{NDC}]  错误描述：%message%newline ' /> </layout> </appender>";
-                    xml += "</log4net>";
+                    _xml = "<?xml version='1.0' encoding='utf-8' ?> <log4net>  <logger name='Logger'> <appender-ref ref='123'/>  <level value='info'/> </logger>";
+                    _xml += "<appender name='123' type='log4net.Appender.RollingFileAppender'> <file value='logs/log' /> <appendToFile value='true' /> <rollingStyle value='Date' /> <datePattern value='_yyyy-MM-dd&quot;.log&quot;' /> <layout type='log4net.Layout.PatternLayout'>   <conversionPattern value='%newline记录时间：%date  %newline 线程ID:[%thread] %newline 日志级别：%-5level %newline 出错类：%logger property:[%property{NDC}]  错误描述：%message%newline ' /> </layout> </appender>";
+                    _xml += "</log4net>";
                     break;
                 case LogMediaEnum.DB:
-                    xml = "<?xml version='1.0' encoding='utf-8' ?> <log4net>  <logger name='Logger'> <appender-ref ref='123'/>  <level value='info'/> </logger>";
-                    xml += "<appender name='123' type='log4net.Appender.RollingFileAppender'> <file value='logs/log' /> <appendToFile value='true' /> <rollingStyle value='Date' /> <datePattern value='_yyyy-MM-dd&quot;.log&quot;' /> <layout type='log4net.Layout.PatternLayout'>   <conversionPattern value='%newline记录时间：%date  %newline 线程ID:[%thread] %newline 日志级别：%-5level %newline 出错类：%logger property:[%property{NDC}]  错误描述：%message%newline ' /> </layout> </appender>";
-                    xml += "</log4net>";
+                    _xml = "<?xml version='1.0' encoding='utf-8' ?> <log4net>  <logger name='Logger'> <appender-ref ref='123'/>  <level value='info'/> </logger>";
+                    _xml += "<appender name='123' type='log4net.Appender.RollingFileAppender'> <file value='logs/log' /> <appendToFile value='true' /> <rollingStyle value='Date' /> <datePattern value='_yyyy-MM-dd&quot;.log&quot;' /> <layout type='log4net.Layout.PatternLayout'>   <conversionPattern value='%newline记录时间：%date  %newline 线程ID:[%thread] %newline 日志级别：%-5level %newline 出错类：%logger property:[%property{NDC}]  错误描述：%message%newline ' /> </layout> </appender>";
+                    _xml += "</log4net>";
                     break;
                 default: break;
             }
-            xmldoc.LoadXml(xml);
+            xmldoc.LoadXml(_xml);
             XmlConfigurator.Configure(xmldoc.DocumentElement);
             return LogManager.GetLogger("Logger");
         }
@@ -48,19 +50,6 @@ namespace CommonHelper
         //    <appender-ref ref="EMAIL"/>
         //    <level value="ALL"/>
         //  </logger>
-
-        //  <!-- 定义输出到日志文件 -->
-        //  <appender name="FILE" type="log4net.Appender.RollingFileAppender">
-        //    <!--日志文件名开头-->
-        //    <file value="logs/log" />
-        //    <appendToFile value="true" />
-        //    <rollingStyle value="Date" />
-        //    <datePattern value="_yyyy-MM-dd&quot;.log&quot;" />
-        //    <layout type="log4net.Layout.PatternLayout">
-        //      <conversionPattern value="%newline记录时间：%date  %newline 线程ID:[%thread] %newline 日志级别：%-5level %newline 出错类：%logger property:[%property{NDC}]  错误描述：%message%newline " />
-        //    </layout>
-        //  </appender>
-
 
         //  <!-- 发送邮件-->
         //  <!--<appender name="EMAIL" type="log4net.Appender.SmtpAppender">

@@ -9,12 +9,10 @@ namespace CommonHelper
 {
     public class EmailLogger : BaseLogger
     {
-        public EmailLogger()
+        public override void Write(string message, object arguments)
         {
+            Log4netBuilder._email = GetArgumentsValue(arguments, "Email").ToString();
             Log = Log4netBuilder.GetLog(LogMediaEnum.EMAIL);
-        }
-        public override void Write(string message)
-        {
             Log.Info(message);
         }
     }
