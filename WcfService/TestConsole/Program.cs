@@ -32,18 +32,11 @@ namespace TestConsole
             //var ss = svic.GetData();
 
             ILogWrap log = new LogWrap();
-            log.Write("Randy Log Email", new LogMediaEnum[] { LogMediaEnum.EMAIL }, new { Email="361703739@qq.com"});
+            //log.Write("Randy Log Email", new LogMediaEnum[] { LogMediaEnum.EMAIL }, new { Email = "361703739@qq.com" });
+            //log.Write("file");
 
 
-            //XmlDocument xmldoc = new XmlDocument();
-            //string xml = "<?xml version='1.0' encoding='utf-8' ?> <log4net>  <logger name='Logger'> <appender-ref ref='FileAppender'/>  <level value='info'/> </logger>";
-            //xml += "<appender name='FileAppender' type='log4net.Appender.RollingFileAppender'> <file value='../logs/log' /> <appendToFile value='true' /> <rollingStyle value='Date' /> <datePattern value='_yyyy-MM-dd&quot;.log&quot;' /> <layout type='log4net.Layout.PatternLayout'>   <conversionPattern value='%newline记录时间：%date  %newline 线程ID:[%thread] %newline 日志级别：%-5level %newline 出错类：%logger property:[%property{NDC}]  错误描述：%message%newline ' /> </layout> </appender>";
-            //xml += "</log4net>";
-
-            //xmldoc.LoadXml(xml);
-            //XmlConfigurator.Configure(xmldoc.DocumentElement);
-            //var log1 = LogManager.GetLogger("Logger");  //LogFileAppender
-            //log1.Info("------------inininininininRandy!!!!!!!!!!!-----------");
+   
 
 
 
