@@ -10,11 +10,7 @@ namespace CommonHelper
 {
     public class LogWrap: ILogWrap
     {
-        private ManualResetEvent _signal;  //  异步？
-        private Queue<Action> _queue;
-
         public ILog ErrorLog { get; set; }
-
 
         public void Write(string message)
         {
@@ -28,9 +24,13 @@ namespace CommonHelper
 
         public void Write(string message, LogMediaEnum[] mediaArray, object obj)
         {
-            if (mediaArray == null)
-                mediaArray = new LogMediaEnum[] { LogMediaEnum.FILE };
+            ThreadPool.QueueUserWorkItem((a) => { DoWrite(message, mediaArray, obj); });
+        }
 
+        private void DoWrite(string message, LogMediaEnum[] mediaArray, object obj)
+        {
+            if (mediaArray == null || mediaArray.Count() == 0)
+                mediaArray = new LogMediaEnum[] { LogMediaEnum.FILE };
             try
             {
                 foreach (var type in mediaArray)
@@ -38,7 +38,7 @@ namespace CommonHelper
                     var logger = LoggerFactory.GetLogger(type);
                     if (logger == null) continue;
                     ErrorLog = logger.Log;
-                    logger.Write(message,obj);
+                    logger.Write(message, obj);
                 }
 
             }
@@ -52,3 +52,7 @@ namespace CommonHelper
         }
     }
 }
+          //调用
+         //ILogWrap log = new LogWrap();
+         //   //log.Write("Randy Log Email", new LogMediaEnum[] { LogMediaEnum.EMAIL }, new { Email = "361703739@qq.com" });
+         //   //log.Write("file");
