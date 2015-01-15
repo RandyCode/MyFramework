@@ -57,11 +57,13 @@
     <Compile Include="Log\Log4netBuilder.cs" />
     <Compile Include="Log\LogMediaEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\AsyncThread.cs" />
     <Compile Include="Utils\ConvertModel.cs" />
+    <Compile Include="Validator\Rule.cs" />
+    <Compile Include="Validator\Validator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Exception\" />
-    <Folder Include="Validator\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

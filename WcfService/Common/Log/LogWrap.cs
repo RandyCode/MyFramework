@@ -1,10 +1,7 @@
 ﻿using log4net;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace CommonHelper
 {
@@ -23,7 +20,7 @@ namespace CommonHelper
         }
 
         public void Write(string message, LogMediaEnum[] mediaArray, object obj)
-        {
+        {           
             ThreadPool.QueueUserWorkItem((a) => { DoWrite(message, mediaArray, obj); });
         }
 

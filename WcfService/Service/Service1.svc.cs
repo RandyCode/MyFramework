@@ -10,6 +10,7 @@ using System.ServiceModel.Activation;
 using Repository;
 using System.Threading.Tasks;
 using Aspect;
+using System.Transactions;
 
 namespace Service
 {
@@ -21,21 +22,30 @@ namespace Service
         public IDatabaseRepository DatabaseRepository { get; set; }
 
         //[Aop.Init]
-        [Aop.BeforeMethod]
-        [Aop.WCFTransaction]
+        //[Aop.BeforeMethod]
+        [Aop.WCFTransaction()]
         public User GetData()
         {
             User aa = new User();
             aa.id = Guid.NewGuid().ToString();
             aa.name = "r2an3dy";
-            var re = DatabaseRepository.Add<User>(aa);
 
-            DatabaseRepository.RealDelete<User>(u => u.name == "randy"); //不存在 
+            //try
+            //{
+                var re = DatabaseRepository.Add<User>(aa);
+                DatabaseRepository.RealDelete<User>(u => u.name == "randy"); //不存在 
+            //}
+            //catch (Exception ex)
+            //{
+                
+            //    throw;
+            //}
 
-
-            var result = DatabaseRepository.GetModel<User>(u => u.name == "randy");
+   
+            //var result = DatabaseRepository.GetModel<User>(u => u.name == "randy"); 
             return new User();
         }
+
 
     }
 

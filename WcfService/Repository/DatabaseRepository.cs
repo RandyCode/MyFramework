@@ -29,7 +29,7 @@ namespace Repository
             where T : class
         {
             _dbContext.Set<T>().Add(model);
-            var result = _dbContext.SaveChanges();
+            var result = _dbContext.SaveChanges(); 
             return result;
         }
 

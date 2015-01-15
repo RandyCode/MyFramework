@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{01171FC6-341B-4F62-A172-DDCF95585681}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{5B08D9C0-5E56-49C5-B911-E7993E524F29}"
+	ProjectSection(ProjectDependencies) = postProject
+		{82686C5A-6260-4081-B8DC-FD64777BE327} = {82686C5A-6260-4081-B8DC-FD64777BE327}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{82686C5A-6260-4081-B8DC-FD64777BE327}"
 EndProject
