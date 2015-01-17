@@ -1,18 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using Autofac.Integration.Mvc;
-using TestConsole.ServiceReference1;
-using System.Web.Mvc;
-using Aspect;
-using Microsoft.Practices.Unity;
-using System.Threading;
-using System.Xml;
-using log4net.Config;
-using log4net;
 using CommonHelper;
 
 

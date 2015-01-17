@@ -38,7 +38,7 @@ namespace Repository
         {
             var model = GetModel(whereLambda);
             DbEntityEntry entry = _dbContext.Entry<T>(model);
-            entry.State = System.Data.EntityState.Unchanged;
+            entry.State = System.Data.Entity.EntityState.Unchanged;
             entry.Property(activeProperty).IsModified = true;
             return _dbContext.SaveChanges();
         }
@@ -56,7 +56,7 @@ namespace Repository
            where T : class
         {
             DbEntityEntry entry = _dbContext.Entry<T>(model);
-            entry.State = System.Data.EntityState.Modified;
+            entry.State = System.Data.Entity.EntityState.Modified;
             return _dbContext.SaveChanges();
         }
 
