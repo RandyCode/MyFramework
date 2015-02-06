@@ -14,7 +14,9 @@ using System.Transactions;
 
 namespace Service
 {
-    // 注意: 使用“重构”菜单上的“重命名”命令，可以同时更改代码、svc 和配置文件中的类名“Service1”。
+    //IIS 寄宿  -》 采用http协议   
+    //WAS寄宿 ->协议： .net.tcp   .net.pipe .net.msmq
+    //winform , console , window service 寄宿
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class Service1 : IService1
     {
@@ -30,23 +32,17 @@ namespace Service
             aa.id = Guid.NewGuid().ToString();
             aa.name = "r2an3dy";
 
-            //try
-            //{
-                var re = DatabaseRepository.Add<User>(aa);
-                DatabaseRepository.RealDelete<User>(u => u.name == "randy"); //不存在 
-            //}
-            //catch (Exception ex)
-            //{
-                
-            //    throw;
-            //}
+            var re = DatabaseRepository.Add<User>(aa);
+            //DatabaseRepository.RealDelete<User>(u => u.name == "randy"); //不存在  检测事务  OK
 
-   
-            //var result = DatabaseRepository.GetModel<User>(u => u.name == "randy"); 
             return new User();
         }
 
 
+        public void ThrowFault()
+        {
+            throw new Exception("Fault ,,,......");
+        }
     }
 
 

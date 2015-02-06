@@ -83,6 +83,13 @@ namespace TestConsole.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://localhost/service/IService1/GetData", ReplyAction="http://localhost/service/IService1/GetDataResponse")]
         System.Threading.Tasks.Task<TestConsole.ServiceReference1.User> GetDataAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost/service/IService1/ThrowFault", ReplyAction="http://localhost/service/IService1/ThrowFaultResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(TestConsole.ServiceReference1.User), Action="http://localhost/service/IService1/ThrowFaultUserFault", Name="User", Namespace="http://schemas.datacontract.org/2004/07/Repository")]
+        void ThrowFault();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost/service/IService1/ThrowFault", ReplyAction="http://localhost/service/IService1/ThrowFaultResponse")]
+        System.Threading.Tasks.Task ThrowFaultAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -118,6 +125,14 @@ namespace TestConsole.ServiceReference1 {
         
         public System.Threading.Tasks.Task<TestConsole.ServiceReference1.User> GetDataAsync() {
             return base.Channel.GetDataAsync();
+        }
+        
+        public void ThrowFault() {
+            base.Channel.ThrowFault();
+        }
+        
+        public System.Threading.Tasks.Task ThrowFaultAsync() {
+            return base.Channel.ThrowFaultAsync();
         }
     }
 }

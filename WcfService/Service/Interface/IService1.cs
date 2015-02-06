@@ -17,6 +17,10 @@ namespace Service
         [OperationContract]
         User GetData();
 
+        //[FaultContract(typeof(SystemFault))]
+        [OperationContract]
+        void ThrowFault();
+
     }
 
  
