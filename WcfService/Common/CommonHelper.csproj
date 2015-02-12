@@ -58,8 +58,6 @@
     <Compile Include="Log\Log4netBuilder.cs" />
     <Compile Include="Log\LogMediaEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceHost\HostInstance.cs" />
-    <Compile Include="ServiceHost\HostTool.cs" />
     <Compile Include="ServiceHost\IHostStartup.cs" />
     <Compile Include="Utils\AsyncThread.cs" />
     <Compile Include="Utils\ConvertModel.cs" />

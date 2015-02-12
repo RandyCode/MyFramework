@@ -8,14 +8,14 @@ using CommonHelper;
 
 namespace TestConsole
 {
-    public class TestConsoleInstance : IHostStartup
+    public class ConsoleApplication1 : IHostStartup
     {
 
         public void Main()
         {
             for (int i = 0; i < 100; i++)
             {
-                Console.WriteLine("TestConsoleInstance : " + i);
+                Console.WriteLine("ConsoleApplication1 : "+i);
             }
         }
     }
