@@ -12,7 +12,19 @@ namespace GenericServiceHost
 {
     public static class HostTool
     {
-        public static FileInfo[] FindFiles(string path, string searchPattern=null)
+        static HostTool()
+        {
+            if (ExistFiles == null)
+                ExistFiles = new Dictionary<string, DateTime>();
+
+        }
+
+        /// <summary>
+        /// fullName,LastUpdateTime
+        /// </summary>
+        public static Dictionary<string, DateTime> ExistFiles { get; set; }
+
+        public static FileInfo[] FindFiles(string path, string searchPattern = null)
         {
 
             DirectoryInfo dir = new DirectoryInfo(path);
