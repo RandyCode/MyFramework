@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace GenericServiceHost
 {
-    public static class HostTool
+    public static class HostEnvironment
     {
-        static HostTool()
+        static HostEnvironment()
         {
             if (ExistFiles == null)
                 ExistFiles = new Dictionary<string, DateTime>();

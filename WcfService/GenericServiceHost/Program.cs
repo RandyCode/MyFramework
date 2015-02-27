@@ -26,9 +26,9 @@ namespace GenericServiceHost
         static void Main(string[] args)
         {
 
-            var files = HostTool.FindFiles(ConfigurationManager.AppSettings["dllPath"], "*.dll");
+            var files = HostEnvironment.FindFiles(ConfigurationManager.AppSettings["dllPath"], "*.dll");
 
-            HostTool.InvokeStatrupMethod(files);
+            HostEnvironment.InvokeStatrupMethod(files);
 
             while (true)
             {
