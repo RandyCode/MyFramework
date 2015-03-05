@@ -1,5 +1,6 @@
 ﻿using CommonHelper;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,14 +16,15 @@ namespace GenericServiceHost
         static HostEnvironment()
         {
             if (ExistFiles == null)
-                ExistFiles = new Dictionary<string, DateTime>();
+                ExistFiles = new Dictionary<string, Thread>();
 
         }
 
         /// <summary>
-        /// fullName,LastUpdateTime
+        /// fullName,Thread
         /// </summary>
-        public static Dictionary<string, DateTime> ExistFiles { get; set; }
+        public static Dictionary<string, Thread> ExistFiles { get; set; }
+        public static Queue<FileInfo> FileQueue{get;set;}
 
         public static FileInfo[] FindFiles(string path, string searchPattern = null)
         {
@@ -42,18 +44,23 @@ namespace GenericServiceHost
 
         }
 
-
+        //进队列
         public static void InvokeStatrupMethod(FileInfo[] files)
         {
             // one file one thread.
             foreach (var file in files)
             {
-                Thread thread = new Thread(new ParameterizedThreadStart(InvokeStart));
-                thread.IsBackground = true;
-                thread.Start(file);
+                //Thread thread = new Thread(new ParameterizedThreadStart(InvokeStart));
+                //ExistFiles.Add(file.FullName, thread);
+                //thread.IsBackground = true;
+                //thread.Start(file);
+                 FileQueue.
             }
 
         }
+
+        //队列变动触发。
+        public 
 
         private static void InvokeStart(object file)
         {
@@ -72,6 +79,12 @@ namespace GenericServiceHost
             var instance = Activator.CreateInstance(cls);
             MethodInfo method = cls.GetMethod("Main");
             method.Invoke(instance, null);
+        }
+
+
+        public static void WatchedFolder(string path) 
+        { 
+        
         }
 
 

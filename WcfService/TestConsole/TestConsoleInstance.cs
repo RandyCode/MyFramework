@@ -13,9 +13,9 @@ namespace TestConsole
 
         public void Main()
         {
-            for (int i = 0; i < 100; i++)
+            while (true)
             {
-                Console.WriteLine("TestConsoleInstance : " + i);
+                Console.WriteLine("TestConsoleInstance : ^_^#.[Randy]   (infinite loop)!");
             }
         }
     }
