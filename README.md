@@ -4,6 +4,8 @@ MY FRAMEWORK
 Total five parts project
 Include ORM Project, Model, Aspect project, Common project and WCF service project
 
+【PS:OMG,ORM had been deleted ! T.T ...   】
+
 
 GennericService host
 =======
