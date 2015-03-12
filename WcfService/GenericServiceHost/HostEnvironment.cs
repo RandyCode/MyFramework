@@ -54,13 +54,13 @@ namespace GenericServiceHost
                 //ExistFiles.Add(file.FullName, thread);
                 //thread.IsBackground = true;
                 //thread.Start(file);
-                 FileQueue.
+                 FileQueue.Enqueue(file);
             }
 
         }
 
         //队列变动触发。
-        public 
+        //public 
 
         private static void InvokeStart(object file)
         {

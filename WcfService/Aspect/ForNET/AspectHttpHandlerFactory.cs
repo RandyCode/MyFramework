@@ -1,12 +1,11 @@
 ﻿using Aspect;
-using EgoalTech.Aspect;
 using Microsoft.Practices.Unity;
 using System;
 using System.Web;
 using System.Web.Compilation;
 using System.Web.UI;
 
-namespace EgoalTech.Aspect.AspNet
+namespace Aspect.AspNet
 {
     public class AspectHttpHandlerFactory : PageHandlerFactory, IHttpHandlerFactory
     {
