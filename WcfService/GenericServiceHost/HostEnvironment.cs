@@ -11,58 +11,72 @@ using System.Threading.Tasks;
 
 namespace GenericServiceHost
 {
-    public static class HostEnvironment
+    public class HostEnvironment
     {
-        static HostEnvironment()
+
+
+        public event Action SignalHandler;
+        /// <summary>
+        /// fullName,Thread
+        /// </summary>
+        public Dictionary<string, Thread> ExistFiles { get; set; }
+        public Queue<FileInfo> FileQueue { get; set; }
+
+        public HostEnvironment(string path, string searchPattern = null)
         {
             if (ExistFiles == null)
                 ExistFiles = new Dictionary<string, Thread>();
 
+            EnqueueFiles(path, searchPattern);
         }
 
-        /// <summary>
-        /// fullName,Thread
-        /// </summary>
-        public static Dictionary<string, Thread> ExistFiles { get; set; }
-        public static Queue<FileInfo> FileQueue{get;set;}
 
-        public static FileInfo[] FindFiles(string path, string searchPattern = null)
+        public void EnqueueFiles(string path, string searchPattern = null)
         {
-
+            FileInfo[] infos = null;
             DirectoryInfo dir = new DirectoryInfo(path);
 
             if (!dir.Exists)
             {
                 dir.Create();
-                return new FileInfo[0];
+                return;
             }
 
             if (string.IsNullOrWhiteSpace(searchPattern))
-                return dir.GetFiles();
+                infos = dir.GetFiles();
             else
-                return dir.GetFiles(searchPattern);
+                infos = dir.GetFiles(searchPattern);
 
-        }
-
-        //进队列
-        public static void InvokeStatrupMethod(FileInfo[] files)
-        {
-            // one file one thread.
-            foreach (var file in files)
+            foreach (var file in infos)
             {
-                //Thread thread = new Thread(new ParameterizedThreadStart(InvokeStart));
-                //ExistFiles.Add(file.FullName, thread);
-                //thread.IsBackground = true;
-                //thread.Start(file);
-                 FileQueue.Enqueue(file);
+                if (ExistFiles.Keys.Contains(file.FullName))
+                    continue;
+                FileQueue.Enqueue(file);
             }
+            SignalHandler();
 
         }
 
-        //队列变动触发。
-        //public 
+        public void DequeueInvoke()
+        {
+            while (FileQueue.Count > 1)
+            {
+                var fileInfo = FileQueue.Dequeue();
+                InvokeStatrupMethod(fileInfo);
+            }
+        }
 
-        private static void InvokeStart(object file)
+        private void InvokeStatrupMethod(FileInfo file)
+        {
+            Thread thread = new Thread(new ParameterizedThreadStart(InvokeStart));
+            if (ExistFiles.Keys.Contains(file.FullName))
+                ExistFiles.Add(file.FullName, thread);
+            thread.IsBackground = true;
+            thread.Start(file);
+        }
+
+
+        private void InvokeStart(object file)
         {
             var target = (FileInfo)file;
             var assembly = Assembly.LoadFrom(target.FullName);
@@ -81,11 +95,6 @@ namespace GenericServiceHost
             method.Invoke(instance, null);
         }
 
-
-        public static void WatchedFolder(string path) 
-        { 
-        
-        }
 
 
     }
