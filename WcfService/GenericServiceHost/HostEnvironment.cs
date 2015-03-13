@@ -69,8 +69,12 @@ namespace GenericServiceHost
         private void InvokeStatrupMethod(FileInfo file)
         {
             Thread thread = new Thread(new ParameterizedThreadStart(InvokeStart));
-            if (ExistFiles.Keys.Contains(file.FullName))
+            if (!ExistFiles.Keys.Contains(file.FullName))
                 ExistFiles.Add(file.FullName, thread);
+            else
+            {
+                ExistFiles[file.FullName] = thread;
+            }
             thread.IsBackground = true;
             thread.Start(file);
         }

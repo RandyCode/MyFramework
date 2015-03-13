@@ -21,7 +21,7 @@ namespace GenericServiceHost
 
         public ThreadWatcher()
         {
-            ThreadSignal = new ManualResetEvent(false);
+            ThreadSignal = new ManualResetEvent(true);
         }
 
 
@@ -41,8 +41,6 @@ namespace GenericServiceHost
             fsWatch.InternalBufferSize = 8192 * 8;
             fsWatch.EnableRaisingEvents = true;
 
-            // 出兑处理reset（）；
-
             Host = new HostEnvironment(path, filter);
             Host.SignalHandler += () => { ThreadSignal.Set(); };
 
@@ -53,8 +51,8 @@ namespace GenericServiceHost
                     if (Host.FileQueue.Count > 0)
                         Host.DequeueInvoke();
 
-                    ThreadSignal.WaitOne();
-                    //ThreadSignal.Reset();
+                    //ThreadSignal.WaitOne();
+                    ThreadSignal.Reset();
                 }
             });
             HandlerFileChange.IsBackground = true;
@@ -70,13 +68,18 @@ namespace GenericServiceHost
             switch (e.ChangeType)
             {
                 case WatcherChangeTypes.Changed:
+                    var threadC = Host.ExistFiles[e.FullPath];
+                    threadC.Abort();
+                    Host.EnqueueFiles(e.FullPath);
                     //e.FullPath
                     break;
                 case WatcherChangeTypes.Created:
-
+                    Host.EnqueueFiles(e.FullPath);
                     break;
                 case WatcherChangeTypes.Deleted:
-
+                    var threadD = Host.ExistFiles[e.FullPath];
+                    threadD.Abort();
+                    Host.ExistFiles.Remove(e.FullPath);
                     break;
                 default: break;
             }
@@ -87,12 +90,13 @@ namespace GenericServiceHost
 
         void OnRenamed(object source, RenamedEventArgs e)
         {
-            if (!this.IsFile(e.FullPath))
+            if (!this.IsFile(e.OldFullPath))
                 return;
 
-            FileSystemWatcher watcher = source as FileSystemWatcher;
-
-
+            var thread = Host.ExistFiles[e.OldFullPath];
+            thread.Abort();
+            Host.ExistFiles.Remove(e.OldFullPath);
+            Host.EnqueueFiles(e.FullPath);
             ThreadSignal.Set();
         }
 
