@@ -14,7 +14,6 @@ namespace GenericServiceHost
     public class ThreadWatcher
     {
 
-        public event Action ActionEvent;
         public ManualResetEvent ThreadSignal { get; set; }
 
         public HostEnvironment Host { get; set; }

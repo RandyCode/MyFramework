@@ -18,14 +18,16 @@ namespace Service
     //WAS寄宿 ->协议： .net.tcp   .net.pipe .net.msmq
     //winform , console , window service 寄宿
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    [Aop.Init]
     public class Service1 : IService1
     {
         [Dependency]
         public IDatabaseRepository DatabaseRepository { get; set; }
 
-        //[Aop.Init]
+
         //[Aop.BeforeMethod]
-        [Aop.WCFTransaction()]
+        //[Aop.WCFTransaction()]
+        [Aop.VerifyAuthority]
         public User GetData()
         {
             User aa = new User();
@@ -38,10 +40,10 @@ namespace Service
             return new User();
         }
 
-
+        [Aop.CatchWcfException]
         public void ThrowFault()
         {
-            throw new Exception("Fault ,,,......");
+            throw new Exception("Wcf Fault");
         }
     }
 

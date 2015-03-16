@@ -17,14 +17,14 @@ namespace TestConsole
         {
             IService1 svic = new Service1Client();
 
-            try
-            {
-                svic.ThrowFault();
-            }
-            catch (FaultException ex)
-            {
-                Console.WriteLine(ex.Message + "  code :" + ex.Code + "Reason:" + ex.Reason);
-            }
+            //try
+            //{
+            //    svic.ThrowFault();
+            //}
+            //catch (FaultException ex)
+            //{
+            //    Console.WriteLine(ex.Message + "  code :" + ex.Code + "Reason:" + ex.Reason);
+            //}
             //var ss = svic.GetData();
 
             //ILogWrap log = new LogWrap();
