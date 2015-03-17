@@ -23,7 +23,11 @@ namespace Service.Aop
             if (exception is WebFaultException<ExceptionDetail>)
                 throw exception;
 
+            if (!(exception is GenericException))
+                exception = new GenericException(exception);
+
             ExceptionDetail detail = new ExceptionDetail(exception);
+
 
             var result = new WebFaultException<ExceptionDetail>(detail, HttpStatusCode.BadRequest);
             throw result;

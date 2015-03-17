@@ -43,7 +43,8 @@ namespace Service
         [Aop.CatchWcfException]
         public void ThrowFault()
         {
-            throw new Exception("Wcf Fault");
+            int j = 1;
+            int i = 1 / (j-1);
         }
     }
 

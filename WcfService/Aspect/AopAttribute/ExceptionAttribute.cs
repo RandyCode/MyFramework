@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,20 +20,29 @@ namespace Aspect
 
         public override IMethodReturn Invoke(Microsoft.Practices.Unity.InterceptionExtension.IMethodInvocation input, Microsoft.Practices.Unity.InterceptionExtension.GetNextHandlerDelegate getNext)
         {
-            IMethodReturn return2 = null;
-            Exception exception = null;
+
+            IMethodReturn methodReturn = null;
             try
             {
-                return2 = getNext()(input, getNext);
-                exception = return2.Exception;
+                try
+                {
+                    methodReturn = getNext()(input, getNext);
+                }
+                catch (Exception exception1)
+                {
+                    Exception exception = exception1;
+                    methodReturn = input.CreateMethodReturn(null);
+                    methodReturn.Exception = exception;
+                }
             }
-            catch (Exception ex)
+            finally
             {
-                exception = ex;
+                if (methodReturn.Exception != null)
+                {
+                    methodReturn.Exception = this.HandlerException(input, methodReturn.Exception);
+                }
             }
-            if (exception != null)
-            { throw this.HandlerException(input, exception); }
-            return return2;
+            return methodReturn;
         }
     }
 }
