@@ -16,9 +16,7 @@ namespace GenericServiceHost
 
 
         public event Action SignalHandler;
-        /// <summary>
-        /// fullName,Thread
-        /// </summary>
+
         public Dictionary<string, Thread> ExistFiles { get; set; }
         public Queue<FileInfo> FileQueue { get; set; }
 
@@ -29,6 +27,7 @@ namespace GenericServiceHost
 
             if (FileQueue == null)
                 FileQueue = new Queue<FileInfo>();
+
 
         }
 
