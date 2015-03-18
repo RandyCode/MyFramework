@@ -19,7 +19,7 @@ namespace Service
     //winform , console , window service 寄宿
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     [Aop.Init]
-    public class Service1 : IService1
+    public class TestService : ITestService
     {
         [Dependency]
         public IDatabaseRepository DatabaseRepository { get; set; }

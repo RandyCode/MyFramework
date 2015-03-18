@@ -22,12 +22,14 @@ namespace GenericServiceHost
         public Dictionary<string, Thread> ExistFiles { get; set; }
         public Queue<FileInfo> FileQueue { get; set; }
 
-        public HostEnvironment(string path, string searchPattern = null)
+        public HostEnvironment()
         {
             if (ExistFiles == null)
                 ExistFiles = new Dictionary<string, Thread>();
 
-            EnqueueFiles(path, searchPattern);
+            if (FileQueue == null)
+                FileQueue = new Queue<FileInfo>();
+
         }
 
 
@@ -36,16 +38,26 @@ namespace GenericServiceHost
             FileInfo[] infos = null;
             DirectoryInfo dir = new DirectoryInfo(path);
 
-            if (!dir.Exists)
+            if (File.Exists(path))
             {
-                dir.Create();
-                return;
+                var first = new FileInfo(path);
+                infos = new[] { first };
+            }
+            else
+            {
+                if (!dir.Exists)
+                {
+                    dir.Create();
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(searchPattern))
+                    infos = dir.GetFiles();
+                else
+                    infos = dir.GetFiles(searchPattern);
             }
 
-            if (string.IsNullOrWhiteSpace(searchPattern))
-                infos = dir.GetFiles();
-            else
-                infos = dir.GetFiles(searchPattern);
+
 
             foreach (var file in infos)
             {
@@ -53,13 +65,14 @@ namespace GenericServiceHost
                     continue;
                 FileQueue.Enqueue(file);
             }
+            if (SignalHandler!=null)
             SignalHandler();
 
         }
 
         public void DequeueInvoke()
         {
-            while (FileQueue.Count > 1)
+            while (FileQueue.Count > 0)
             {
                 var fileInfo = FileQueue.Dequeue();
                 InvokeStatrupMethod(fileInfo);

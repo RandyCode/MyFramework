@@ -1,0 +1,2 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Service.Service1" CodeBehind="TestService.svc.cs"
+  Factory="Aspect.ForWCF.AspectServiceHostFactory, Aspect" %>

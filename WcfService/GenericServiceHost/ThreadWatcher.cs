@@ -18,9 +18,11 @@ namespace GenericServiceHost
 
         public HostEnvironment Host { get; set; }
 
+        public object obj = new object();
+
         public ThreadWatcher()
         {
-            ThreadSignal = new ManualResetEvent(true);
+            ThreadSignal = new ManualResetEvent(false);
         }
 
 
@@ -36,22 +38,21 @@ namespace GenericServiceHost
             fsWatch.Deleted += new FileSystemEventHandler(OnChanged);
             fsWatch.Renamed += new RenamedEventHandler(OnRenamed);
 
-            fsWatch.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.CreationTime;
+            fsWatch.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
             fsWatch.InternalBufferSize = 8192 * 8;
             fsWatch.EnableRaisingEvents = true;
 
-            Host = new HostEnvironment(path, filter);
-            Host.SignalHandler += () => { ThreadSignal.Set(); };
-
+            Host = new HostEnvironment();
+            Host.SignalHandler += () => { ThreadSignal.Reset(); }; 
             Thread HandlerFileChange = new Thread(() =>
             {
+                Host.EnqueueFiles(path, filter);
                 while (true)
                 {
                     if (Host.FileQueue.Count > 0)
                         Host.DequeueInvoke();
 
-                    //ThreadSignal.WaitOne();
-                    ThreadSignal.Reset();
+                    ThreadSignal.WaitOne();
                 }
             });
             HandlerFileChange.IsBackground = true;
@@ -67,10 +68,11 @@ namespace GenericServiceHost
             switch (e.ChangeType)
             {
                 case WatcherChangeTypes.Changed:
+                    if (Host.FileQueue.Where(o => o.FullName == e.FullPath) != null)
+                        break;
                     var threadC = Host.ExistFiles[e.FullPath];
                     threadC.Abort();
                     Host.EnqueueFiles(e.FullPath);
-                    //e.FullPath
                     break;
                 case WatcherChangeTypes.Created:
                     Host.EnqueueFiles(e.FullPath);
@@ -84,6 +86,7 @@ namespace GenericServiceHost
             }
 
             ThreadSignal.Set();
+            ThreadSignal.Reset();  //重新挂起
         }
 
 
@@ -96,7 +99,7 @@ namespace GenericServiceHost
             thread.Abort();
             Host.ExistFiles.Remove(e.OldFullPath);
             Host.EnqueueFiles(e.FullPath);
-            ThreadSignal.Set();
+            ThreadSignal.Reset();
         }
 
         private bool IsFile(string path)

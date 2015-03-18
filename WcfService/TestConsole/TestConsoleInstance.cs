@@ -15,7 +15,7 @@ namespace TestConsole
         {
             while (true)
             {
-                Console.WriteLine("TestConsoleInstance : ^_^#.[Randy]   (infinite loop)!");
+                Console.WriteLine("1 : ^_^#.[Randy]   (infinite loop)!");
             }
         }
     }

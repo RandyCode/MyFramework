@@ -10,7 +10,7 @@ namespace Service
         public void Register(IUnityContainer container)
         {
             _container = container;
-            RegistNSetInterceptor<IService1, Service1>(); // 不注册拦截不到
+            RegistNSetInterceptor<ITestService, TestService>(); // 不注册拦截不到
             RegistNSetInterceptor<IDatabaseRepository, DatabaseRepository>();
         }
 
