@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace CommonHelper
 {
-    /// <summary>
-    /// DTO  转换
-    /// </summary>
-    public class ConvertModel
+    public class UtilsHepler
     {
+        #region DTO  Converter
+
         public static object ToEntity(Type targetType, object sourceModel)
         {
             //match property name and Assignment
@@ -45,5 +44,6 @@ namespace CommonHelper
             }
             return result;
         }
+        #endregion
     }
 }

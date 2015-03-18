@@ -11,16 +11,16 @@ namespace CommonHelper
     /// <summary>
     /// 事务MSMQ
     /// </summary>
-    public class QueueManager
+    public class QueueManager :IQueueManager
     {
 
         private bool _transaction = false;
-        private MessageQueue Queue { get; set; }
+        private MessageQueue _queue { get; set; }
 
         public long MaxSize
         {
-            get { return Queue.MaximumQueueSize; }
-            set { Queue.MaximumQueueSize = value; }
+            get { return _queue.MaximumQueueSize; }
+            set { _queue.MaximumQueueSize = value; }
         }
 
         /// <summary>
@@ -28,8 +28,8 @@ namespace CommonHelper
         /// </summary>
         public MessagePriority Priority
         {
-            get { return (MessagePriority)Queue.BasePriority; }
-            set { Queue.BasePriority = (short)value; }
+            get { return (MessagePriority)_queue.BasePriority; }
+            set { _queue.BasePriority = (short)value; }
         }
 
 
@@ -41,13 +41,13 @@ namespace CommonHelper
                 if (!MessageQueue.Exists(path))
                 {
                     if (_transaction == false)
-                        Queue = MessageQueue.Create(path); 
+                        _queue = MessageQueue.Create(path); 
                     else
-                        Queue = MessageQueue.Create(path, true);
+                        _queue = MessageQueue.Create(path, true);
                 }
                 else
                 {
-                    Queue = new MessageQueue(path);
+                    _queue = new MessageQueue(path);
                 }
                 Priority = MessagePriority.Normal;
             }
@@ -83,13 +83,13 @@ namespace CommonHelper
                 if (_transaction == false)
                 {
                     myMessage.Priority = this.Priority;
-                    Queue.Send(myMessage);
+                    _queue.Send(myMessage);
                 }
                 else
                 {
                     var messageQueueTransaction = new MessageQueueTransaction();
                     messageQueueTransaction.Begin();
-                    Queue.Send(myMessage, messageQueueTransaction);
+                    _queue.Send(myMessage, messageQueueTransaction);
                     messageQueueTransaction.Commit();
                 }
 
@@ -104,7 +104,7 @@ namespace CommonHelper
 
         public T ReceiveMessage<T>()
         {
-            Queue.Formatter = new XmlMessageFormatter(new Type[] { typeof(T) });
+            _queue.Formatter = new XmlMessageFormatter(new Type[] { typeof(T) });
             try
             {
                 Message myMessage;
@@ -112,13 +112,13 @@ namespace CommonHelper
                 {
                     var tran = new MessageQueueTransaction();
                     tran.Begin();
-                    myMessage = Queue.Receive(tran);
+                    myMessage = _queue.Receive(tran);
                     tran.Commit();
 
                 }
                 else
                 {
-                    myMessage = Queue.Receive();
+                    myMessage = _queue.Receive();
                 }
 
 
@@ -137,8 +137,8 @@ namespace CommonHelper
             //var messageQueue = (MessageQueue)sender;
             //var message = messageQueue.EndReceive(e.AsyncResult);
             //var messageObj = message.Body;
-            Queue.ReceiveCompleted += new ReceiveCompletedEventHandler(action);
-            Queue.BeginReceive();
+            _queue.ReceiveCompleted += new ReceiveCompletedEventHandler(action);
+            _queue.BeginReceive();
         }
 
 
@@ -146,10 +146,10 @@ namespace CommonHelper
         {
             //连接到本地队列
 
-            Queue.Formatter = new XmlMessageFormatter(new Type[] { typeof(T) });
+            _queue.Formatter = new XmlMessageFormatter(new Type[] { typeof(T) });
 
             //从队列中接收消息
-            System.Messaging.Message myMessage = Queue.Peek();
+            System.Messaging.Message myMessage = _queue.Peek();
             return (T)myMessage.Body; //获取消息的内容
 
         }
@@ -157,9 +157,9 @@ namespace CommonHelper
         public List<T> GetAllMessage<T>()
         {
 
-            Queue.Formatter = new XmlMessageFormatter(new Type[] { typeof(T) });
+            _queue.Formatter = new XmlMessageFormatter(new Type[] { typeof(T) });
 
-            Message[] msgArr = Queue.GetAllMessages();
+            Message[] msgArr = _queue.GetAllMessages();
             List<T> list = new List<T>();
             msgArr.ToList().ForEach((o) =>
             {
