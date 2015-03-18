@@ -8,9 +8,11 @@ Include ORM Project, Model, Aspect project, Common project and WCF service proje
 - GennericService host
 For all background job auto Exec..(with provide dll)
 - Infrastructure 
+ - Log4net
+ - MSMQ
+ - UploadFileHelper  (working...) 
 - Model
 - EF 
-- log4net
 - Ioc / Aop
   - using microsoft.unity framework
 - WCF
