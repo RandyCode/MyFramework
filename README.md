@@ -9,11 +9,9 @@ Include ORM Project, Model, Aspect project, Common project and WCF service proje
 For all background job auto Exec..(with provide dll)
 
 - Infrastructure 
-  
 - Model
-
 - EF 
-  
+- log4net
 - Ioc / Aop
   - using microsoft.unity framework
 
