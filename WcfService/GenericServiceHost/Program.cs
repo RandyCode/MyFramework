@@ -20,11 +20,11 @@ namespace GenericServiceHost
         static void Main(string[] args)
         {
             var path = ConfigurationManager.AppSettings["dllPath"];
-
             ThreadWatcher wathcher = new ThreadWatcher();
             wathcher.WatchDirectory(path, "*.dll");
 
             Console.ReadKey();
+
         }
 
 

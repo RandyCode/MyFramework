@@ -91,7 +91,7 @@ namespace GenericServiceHost
             thread.Start(file);
         }
 
-
+        //to do : except the same class name
         private void InvokeStart(object file)
         {
             var target = (FileInfo)file;
