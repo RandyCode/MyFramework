@@ -11,8 +11,9 @@ namespace Service
     // 注意: 为了启动 WCF 测试客户端以测试此服务，请在解决方案资源管理器中选择 UtilsService.svc 或 UtilsService.svc.cs，然后开始调试。
     public class UtilsService : IUtilsService
     {
-        public void DoWork()
+        public string DoWork()
         {
+            return "randy";
         }
     }
 }

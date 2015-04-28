@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -45,5 +48,21 @@ namespace CommonHelper
             return result;
         }
         #endregion
+
+        public static object DeepClone(object obj)
+        {
+
+            IFormatter bf = new BinaryFormatter();
+            Stream stream = new FileStream("MyFile.bin", FileMode.Create, FileAccess.Write, FileShare.None);
+            bf.Serialize(stream, obj);
+            stream.Close();
+
+
+            Stream stream1 = new FileStream("MyFile.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
+            var result = bf.Deserialize(stream1);
+            stream1.Close();
+
+            return result;
+        }
     }
 }

@@ -19,9 +19,15 @@ namespace GenericServiceHost
 
         static void Main(string[] args)
         {
-            var path = ConfigurationManager.AppSettings["dllPath"];
-            ThreadWatcher wathcher = new ThreadWatcher();
-            wathcher.WatchDirectory(path, "*.dll");
+            //var path = ConfigurationManager.AppSettings["dllPath"];
+            //ThreadWatcher wathcher = new ThreadWatcher();
+            //wathcher.WatchDirectory(path, "*.dll");
+
+            int a = 2;
+            int b = a;
+            a = 3;
+            Console.WriteLine(a);
+            Console.WriteLine(b);
 
             Console.ReadKey();
 
