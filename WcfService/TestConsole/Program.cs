@@ -8,6 +8,7 @@ using System.IO;
 using System.Collections.Generic;
 
 
+
 namespace TestConsole
 {
 
@@ -19,40 +20,11 @@ namespace TestConsole
 
         static void Main(string[] args)
         {
+            //wcf
             IService1 svic = new Service1Client();
 
-            //try
-            //{
-            //    svic.ThrowFault();
-            //}
-            //catch (FaultException ex)
-            //{
-            //    Console.WriteLine(ex.Message + "  code :" + ex.Code + "Reason:" + ex.Reason);
-            //}
-            //var ss = svic.GetData();
 
-            //ILogWrap log = new LogWrap();
-            //log.Write("Randy Log Email", new LogMediaEnum[] { LogMediaEnum.EMAIL }, new { Email = "361703739@qq.com" });
-            //log.Write("file");
-
-
-            //A a = new A() { Name = "randy" };
-
-            List<A> a = new List<A> { new A { Name = "randy" }, new A { Name = "tom" } };
-
-
-            IFormatter bf = new BinaryFormatter();
-            Stream stream = new FileStream("MyFile.bin", FileMode.Create, FileAccess.Write, FileShare.None);
-            bf.Serialize(stream, a);
-            stream.Close();
-
-
-            Stream stream1 = new FileStream("MyFile.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
-            var a1 = (List<A>)bf.Deserialize(stream1);
-
-
-            //A a1 = a;
-            Console.WriteLine(a == a1);
+            //remoting
 
 
 
@@ -65,10 +37,9 @@ namespace TestConsole
     }
 
 
-    [Serializable]
-    class A
+    public class Hello : MarshalByRefObject
     {
-        public string Name { get; set; }
+ 
     }
 
 

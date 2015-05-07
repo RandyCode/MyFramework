@@ -11,8 +11,12 @@ using System.Threading.Tasks;
 
 namespace GenericServiceHost
 {
+    /// <summary>
+    /// 少了appdomain隔离
+    /// </summary>
     public class ThreadWatcher
     {
+
 
         public ManualResetEvent ThreadSignal { get; set; }
 

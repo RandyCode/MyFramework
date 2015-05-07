@@ -53,7 +53,7 @@ namespace CommonHelper
             }
             catch
             {
-                throw new Exception("Fail to create message queue.");
+                throw new Exception("Fail to initialize message queue.");
             }
         }
 

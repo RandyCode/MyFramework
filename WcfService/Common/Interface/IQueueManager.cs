@@ -11,7 +11,6 @@ namespace CommonHelper
     {
          MessagePriority Priority{get;set;}
 
-
          void DeleteQueue(string path);
 
          bool SendMessage<T>(T target, bool tran = true);
