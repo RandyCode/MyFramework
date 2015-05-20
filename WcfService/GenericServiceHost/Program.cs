@@ -15,7 +15,6 @@ namespace GenericServiceHost
 {
     class Program
     {
-        static ManualResetEvent _signal = new ManualResetEvent(false);
 
         static void Main(string[] args)
         {

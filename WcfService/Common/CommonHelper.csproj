@@ -48,7 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interface\IRemotingManager.cs" />
     <Compile Include="Interface\IAttachmentManager.cs" />
     <Compile Include="Log\LoggerFactory.cs" />
     <Compile Include="Log\BaseLogger.cs" />
@@ -61,7 +60,6 @@
     <Compile Include="Log\LogMediaEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceHost\IHostStartup.cs" />
-    <Compile Include="Utils\RemotingManager.cs" />
     <Compile Include="Utils\AttachmentManager.cs" />
     <Compile Include="Utils\UtilsHepler.cs" />
     <Compile Include="Utils\QueueManager.cs" />
