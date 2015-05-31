@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace CommonHelper
 {
-    public class LogWrap: ILogWrap
+    public class LogWrap : ILogWrap
     {
         public ILog ErrorLog { get; set; }
 
@@ -20,7 +20,7 @@ namespace CommonHelper
         }
 
         public void Write(string message, LogMediaEnum[] mediaArray, object obj)
-        {           
+        {
             ThreadPool.QueueUserWorkItem((a) => { DoWrite(message, mediaArray, obj); });
         }
 
@@ -49,7 +49,8 @@ namespace CommonHelper
         }
     }
 }
-          //调用
-         //ILogWrap log = new LogWrap();
-         //   //log.Write("Randy Log Email", new LogMediaEnum[] { LogMediaEnum.EMAIL }, new { Email = "361703739@qq.com" });
-         //   //log.Write("file");
+//调用
+//ILogWrap log = new LogWrap();
+//log.Write("Randy Log Email", new LogMediaEnum[] { LogMediaEnum.EMAIL }, new { Email = "361703739@qq.com" });
+//log.Write("Randy Log DB", new LogMediaEnum[] { LogMediaEnum.DB }, new { ConnectionStr = "..." });
+//log.Write("file");

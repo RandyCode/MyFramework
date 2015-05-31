@@ -18,7 +18,7 @@ namespace CommonHelper
         protected object GetArgumentsValue(object args,string PropertyName)
         {
             if (args == null)
-                return null;
+                return string.Empty;
 
             Type type = args.GetType();
             var properties = type.GetProperties();

@@ -17,6 +17,10 @@ namespace TestConsole
         {
             IService1 svic = new Service1Client();
 
+
+            ILogWrap log = new LogWrap();
+            log.Write("llog  db", new LogMediaEnum[] { LogMediaEnum.DB });
+
             //try
             //{
             //    svic.ThrowFault();
