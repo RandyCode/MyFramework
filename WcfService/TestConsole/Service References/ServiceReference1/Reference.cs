@@ -9,130 +9,52 @@
 //------------------------------------------------------------------------------
 
 namespace TestConsole.ServiceReference1 {
-    using System.Runtime.Serialization;
-    using System;
     
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Repository")]
-    [System.SerializableAttribute()]
-    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IUtilsService")]
+    public interface IUtilsService {
         
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUtilsService/DoWork", ReplyAction="http://tempuri.org/IUtilsService/DoWorkResponse")]
+        string DoWork(string cipher);
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string idField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string nameField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string id {
-            get {
-                return this.idField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.idField, value) != true)) {
-                    this.idField = value;
-                    this.RaisePropertyChanged("id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string name {
-            get {
-                return this.nameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.nameField, value) != true)) {
-                    this.nameField = value;
-                    this.RaisePropertyChanged("name");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUtilsService/DoWork", ReplyAction="http://tempuri.org/IUtilsService/DoWorkResponse")]
+        System.Threading.Tasks.Task<string> DoWorkAsync(string cipher);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://localhost/service", ConfigurationName="ServiceReference1.IService1")]
-    public interface IService1 {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost/service/IService1/GetData", ReplyAction="http://localhost/service/IService1/GetDataResponse")]
-        TestConsole.ServiceReference1.User GetData();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost/service/IService1/GetData", ReplyAction="http://localhost/service/IService1/GetDataResponse")]
-        System.Threading.Tasks.Task<TestConsole.ServiceReference1.User> GetDataAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost/service/IService1/ThrowFault", ReplyAction="http://localhost/service/IService1/ThrowFaultResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(TestConsole.ServiceReference1.User), Action="http://localhost/service/IService1/ThrowFaultUserFault", Name="User", Namespace="http://schemas.datacontract.org/2004/07/Repository")]
-        void ThrowFault();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://localhost/service/IService1/ThrowFault", ReplyAction="http://localhost/service/IService1/ThrowFaultResponse")]
-        System.Threading.Tasks.Task ThrowFaultAsync();
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IService1Channel : TestConsole.ServiceReference1.IService1, System.ServiceModel.IClientChannel {
+    public interface IUtilsServiceChannel : TestConsole.ServiceReference1.IUtilsService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class Service1Client : System.ServiceModel.ClientBase<TestConsole.ServiceReference1.IService1>, TestConsole.ServiceReference1.IService1 {
+    public partial class UtilsServiceClient : System.ServiceModel.ClientBase<TestConsole.ServiceReference1.IUtilsService>, TestConsole.ServiceReference1.IUtilsService {
         
-        public Service1Client() {
+        public UtilsServiceClient() {
         }
         
-        public Service1Client(string endpointConfigurationName) : 
+        public UtilsServiceClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public Service1Client(string endpointConfigurationName, string remoteAddress) : 
+        public UtilsServiceClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public Service1Client(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public UtilsServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public Service1Client(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public UtilsServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
-        public TestConsole.ServiceReference1.User GetData() {
-            return base.Channel.GetData();
+        public string DoWork(string cipher) {
+            return base.Channel.DoWork(cipher);
         }
         
-        public System.Threading.Tasks.Task<TestConsole.ServiceReference1.User> GetDataAsync() {
-            return base.Channel.GetDataAsync();
-        }
-        
-        public void ThrowFault() {
-            base.Channel.ThrowFault();
-        }
-        
-        public System.Threading.Tasks.Task ThrowFaultAsync() {
-            return base.Channel.ThrowFaultAsync();
+        public System.Threading.Tasks.Task<string> DoWorkAsync(string cipher) {
+            return base.Channel.DoWorkAsync(cipher);
         }
     }
 }

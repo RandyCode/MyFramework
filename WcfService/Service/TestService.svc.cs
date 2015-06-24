@@ -19,32 +19,27 @@ namespace Service
     //winform , console , window service 寄宿
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     [Aop.Init]
-    public class TestService : ITestService
+    [Aop.VerifyAuthority]
+    public class TestService :  ITestService
     {
         [Dependency]
         public IDatabaseRepository DatabaseRepository { get; set; }
 
 
-        //[Aop.BeforeMethod]
-        //[Aop.WCFTransaction()]
         [Aop.VerifyAuthority]
-        public User GetData()
+        public User GetData(string cipher)
         {
-            User aa = new User();
-            aa.id = Guid.NewGuid().ToString();
-            aa.name = "r2an3dy";
-
-            var re = DatabaseRepository.Add<User>(aa);
             //DatabaseRepository.RealDelete<User>(u => u.name == "randy"); //不存在  检测事务  OK
-
+            //MyUnityContainer.Instance
             return new User();
         }
 
         [Aop.CatchWcfException]
+
         public void ThrowFault()
         {
             int j = 1;
-            int i = 1 / (j-1);
+            int i = 1 / (j - 1);
         }
     }
 

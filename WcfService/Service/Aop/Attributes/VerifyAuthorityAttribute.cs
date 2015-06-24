@@ -15,6 +15,11 @@ namespace Service.Aop
 
         public override void CheckAuthentication(IMethodInvocation input)
         {
+            var param = input.Arguments["cipher"].ToString(); //.GetParameterInfo("cipher");
+
+            var inputs = input.Inputs;
+            var context= input.InvocationContext;
+
             Console.WriteLine("VerifyAuthority");
         }
     }

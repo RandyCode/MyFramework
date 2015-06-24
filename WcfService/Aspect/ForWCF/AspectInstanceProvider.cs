@@ -53,6 +53,8 @@ namespace Aspect.ForWCF
                 {
                     IUnityContainer unityContainer = this.UnityContainer.CreateChildContainer();
                     InitContainer.Single = unityContainer;
+                    var aa= unityContainer.IsRegistered(this.ContractType);
+
                     obj1 = this.UnityContainer.Resolve(this.ContractType, new ResolverOverride[0]);  //bug
                     //obj1 = PolicyInjection.Wrap(this.ContractType, obj1);
                 }

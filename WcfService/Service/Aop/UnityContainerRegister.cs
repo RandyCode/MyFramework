@@ -11,7 +11,12 @@ namespace Service
         {
             _container = container;
             RegistNSetInterceptor<ITestService, TestService>(); // 不注册拦截不到
+            RegistNSetInterceptor<IService1, Service1>(); // 不注册拦截不到
+            RegistNSetInterceptor<IUtilsService, UtilsService>(); // 不注册拦截不到
+
+         
             RegistNSetInterceptor<IDatabaseRepository, DatabaseRepository>();
+  
         }
 
         #region private 

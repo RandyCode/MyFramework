@@ -12,6 +12,6 @@ namespace Service
     public interface IUtilsService
     {
         [OperationContract]
-        string DoWork();
+        string DoWork(string cipher);
     }
 }
