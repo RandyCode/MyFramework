@@ -10,17 +10,11 @@ namespace Aspect
 {
     static class InitContainer
     {
-        static IUnityContainer _singel;
+        static IUnityContainer _singel = new UnityContainer();
 
         public static IUnityContainer Single
         {
-            get
-            {
-                if (_singel == null)
-                    _singel = new UnityContainer();
-
-                return _singel;
-            }
+            get { if (_singel == null) _singel = new UnityContainer(); return _singel; }
             set { _singel = value; }
         }
 

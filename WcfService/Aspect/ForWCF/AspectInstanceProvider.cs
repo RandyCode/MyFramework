@@ -52,9 +52,9 @@ namespace Aspect.ForWCF
                 else
                 {
                     IUnityContainer unityContainer = this.UnityContainer.CreateChildContainer();
-                    InitContainer.Single = unityContainer;
+                  InitContainer.Single = unityContainer;
                     obj1 = this.UnityContainer.Resolve(this.ContractType, new ResolverOverride[0]);  //bug
-                    //obj1 = PolicyInjection.Wrap(this.ContractType, obj1);
+         
                 }
                 obj = obj1;
             }
@@ -72,18 +72,7 @@ namespace Aspect.ForWCF
 
         public void ReleaseInstance(InstanceContext instanceContext, object instance)
         {
-            try
-            {
-                IUnityContainer currentContainer = InitContainer.Single;
-                if (currentContainer != null)
-                {
-                    currentContainer.Dispose();
-                    InitContainer.Single = null;
-                }
-            }
-            catch
-            {
-            }
+          
             IDisposable disposable = instance as IDisposable;
             if (disposable != null)
             {

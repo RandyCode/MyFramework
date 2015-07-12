@@ -11,6 +11,7 @@ namespace Service
         {
             _container = container;
             RegistNSetInterceptor<ITestService, TestService>(); // 不注册拦截不到
+            RegistNSetInterceptor<IUtilsService, UtilsService>(); // 不注册拦截不到
             RegistNSetInterceptor<IDatabaseRepository, DatabaseRepository>();
         }
 
@@ -28,7 +29,7 @@ namespace Service
             _container.RegisterType<I, T>(new HierarchicalLifetimeManager())
                         .AddNewExtension<Interception>()
                         .Configure<Interception>()
-                        .SetInterceptorFor<I>(new InterfaceInterceptor());
+                        .SetInterceptorFor<I>( typeof(T).FullName,new InterfaceInterceptor());
         } 
         #endregion
     }

@@ -30,12 +30,7 @@ namespace Service
         [Aop.VerifyAuthority]
         public User GetData()
         {
-            User aa = new User();
-            aa.id = Guid.NewGuid().ToString();
-            aa.name = "r2an3dy";
-
-            var re = DatabaseRepository.Add<User>(aa);
-            //DatabaseRepository.RealDelete<User>(u => u.name == "randy"); //不存在  检测事务  OK
+            Console.WriteLine("utils.dowork");
 
             return new User();
         }

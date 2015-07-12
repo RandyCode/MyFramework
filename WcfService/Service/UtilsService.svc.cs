@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,8 +13,14 @@ namespace Service
     // 注意: 为了启动 WCF 测试客户端以测试此服务，请在解决方案资源管理器中选择 UtilsService.svc 或 UtilsService.svc.cs，然后开始调试。
     public class UtilsService : IUtilsService
     {
+        [Dependency]
+        public IDatabaseRepository DatabaseRepository { get; set; }
+
+       
+        [Aop.VerifyAuthority]
         public void DoWork()
         {
+            Console.WriteLine("utils.dowork");
         }
     }
 }

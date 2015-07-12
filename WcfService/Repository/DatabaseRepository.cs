@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -20,6 +21,7 @@ namespace Repository
 
         private DbContext _dbContext;
 
+        [InjectionConstructor]
         public DatabaseRepository()
         {
             _dbContext = new AopDbEntity();   //can extension -> reflection

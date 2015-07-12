@@ -19,15 +19,12 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8888/Service/Service1.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost/Service/UtilsService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Service13.xsd" MetadataType="Schema" ID="6cbc7203-2f38-4f7b-b047-1a1e74fecb38" SourceId="1" SourceUrl="http://localhost:8888/Service/Service1.svc?xsd=xsd1" />
-    <MetadataFile FileName="Service131.xsd" MetadataType="Schema" ID="99616abc-1ed2-4782-ad28-2a0481857b44" SourceId="1" SourceUrl="http://localhost:8888/Service/Service1.svc?xsd=xsd2" />
-    <MetadataFile FileName="Service12.wsdl" MetadataType="Wsdl" ID="1404ba48-9c1f-49d3-955a-047ba6607cae" SourceId="1" SourceUrl="http://localhost:8888/Service/Service1.svc?wsdl" />
-    <MetadataFile FileName="Service121.wsdl" MetadataType="Wsdl" ID="f0e63230-aa72-4bd8-96a9-a49f28ec477a" SourceId="1" SourceUrl="http://localhost:8888/Service/Service1.svc?wsdl=wsdl0" />
-    <MetadataFile FileName="Service11.disco" MetadataType="Disco" ID="31f8d13a-e064-415f-815a-942d9bd15a88" SourceId="1" SourceUrl="http://localhost:8888/Service/Service1.svc?disco" />
-    <MetadataFile FileName="Service132.xsd" MetadataType="Schema" ID="abf63678-2d5f-41e6-b9f2-d441f8737e86" SourceId="1" SourceUrl="http://localhost:8888/Service/Service1.svc?xsd=xsd0" />
+    <MetadataFile FileName="UtilsService.wsdl" MetadataType="Wsdl" ID="85ded317-36be-457c-99ad-f8e865196626" SourceId="1" SourceUrl="http://localhost/Service/UtilsService.svc?wsdl" />
+    <MetadataFile FileName="UtilsService.disco" MetadataType="Disco" ID="5152dc2e-b0c5-4a13-8310-5d3fef69de01" SourceId="1" SourceUrl="http://localhost/Service/UtilsService.svc?disco" />
+    <MetadataFile FileName="UtilsService.xsd" MetadataType="Schema" ID="8c2779e7-abb5-4c94-aae1-4562ba12c14a" SourceId="1" SourceUrl="http://localhost/Service/UtilsService.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
